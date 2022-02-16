@@ -20,7 +20,6 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.List;
-import java.util.concurrent.atomic.AtomicInteger;
 
 public class WordleGUIListenerHandler implements Listener {
 
@@ -121,9 +120,9 @@ public class WordleGUIListenerHandler implements Listener {
 			return;
 		}
 
-		AtomicInteger startSlotIntent = new AtomicInteger(getStartSlot(intentIndex));
+		int startSlotIntent = getStartSlot(intentIndex);
 		for (WordleIntentPart part : intents.get(intentIndex).getParts()) {
-			topInventory.setItem(startSlotIntent.getAndIncrement(), buildWordPart(part));
+			topInventory.setItem(startSlotIntent++, buildWordPart(part));
 		}
 	}
 

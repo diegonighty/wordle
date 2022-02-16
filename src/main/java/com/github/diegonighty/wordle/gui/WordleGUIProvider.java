@@ -4,29 +4,24 @@ import com.github.diegonighty.wordle.configuration.Configuration;
 import com.github.diegonighty.wordle.game.intent.WordleIntent;
 import com.github.diegonighty.wordle.gui.listener.WordleGUIListenerHandler;
 import com.github.diegonighty.wordle.user.User;
-import com.github.diegonighty.wordle.word.HeadWordDictionaryService;
 import org.bukkit.inventory.Inventory;
 import team.unnamed.gui.abstraction.item.ItemClickable;
 import team.unnamed.gui.core.gui.type.GUIBuilder;
 
 import java.util.List;
-import java.util.concurrent.atomic.AtomicInteger;
 
 import static com.github.diegonighty.wordle.game.intent.WordleIntent.WordleIntentPart;
 
 public class WordleGUIProvider {
 
 	private final Configuration gui;
-	private final HeadWordDictionaryService headService;
 	private final WordleGUIListenerHandler listenerHandler;
 
 	public WordleGUIProvider(
 			Configuration gui,
-			HeadWordDictionaryService headService,
 			WordleGUIListenerHandler listenerHandler
 	) {
 		this.gui = gui;
-		this.headService = headService;
 		this.listenerHandler = listenerHandler;
 	}
 
@@ -47,9 +42,9 @@ public class WordleGUIProvider {
 		for (int i = 0; i < intents.size(); i++) {
 			WordleIntent intent = intents.get(i);
 
-			AtomicInteger slot = new AtomicInteger(listenerHandler.getStartSlot(i));
+			int slot = listenerHandler.getStartSlot(i);
 			for (WordleIntentPart part : intent.getParts()) {
-				builder.addItem(buildWordPreview(part), slot.getAndIncrement());
+				builder.addItem(buildWordPreview(part), slot++);
 			}
 		}
 	}
