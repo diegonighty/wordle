@@ -111,4 +111,8 @@ public class KeyboardService {
 	public char getBackspaceKey() {
 		return BACKSPACE_KEY;
 	}
+
+	public char getUnknownKey() {
+		return UNKNOWN_KEY;
+	}
 }

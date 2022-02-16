@@ -47,7 +47,7 @@ public class WordleGUIProvider {
 		for (int i = 0; i < intents.size(); i++) {
 			WordleIntent intent = intents.get(i);
 
-			AtomicInteger slot = new AtomicInteger(getStartSlot(i));
+			AtomicInteger slot = new AtomicInteger(listenerHandler.getStartSlot(i));
 			for (WordleIntentPart part : intent.getParts()) {
 				builder.addItem(buildWordPreview(part), slot.getAndIncrement());
 			}
@@ -56,7 +56,7 @@ public class WordleGUIProvider {
 
 	private ItemClickable buildWordPreview(WordleIntentPart part) {
 		return ItemClickable.builderCancellingEvent()
-				.setItemStack(headService.getHead(part.getLetter(), part.getType()))
+				.setItemStack(listenerHandler.buildWordPart(part))
 				.build();
 	}
 
@@ -69,10 +69,6 @@ public class WordleGUIProvider {
 		builder.fillColumn(border, 1);
 		builder.fillColumn(border, 7);
 		builder.fillColumn(border, 8);
-	}
-
-	private int getStartSlot(int index) {
-		return gui.getInt("word-index." + index);
 	}
 
 }
