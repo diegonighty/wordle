@@ -1,0 +1,7 @@
+keys:
+  mark:
+    name: "&aConfirm"
+    slot: 0
+  backspace:
+    name: "&cBackspace"
+    slot: 8

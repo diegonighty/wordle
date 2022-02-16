@@ -1,0 +1,8 @@
+# "SQL" OR "FLATFILE"
+type: SQL
+
+credentials:
+  database: wordle
+  user: root
+  password: qwerty
+  address: 127.0.0.1:3306

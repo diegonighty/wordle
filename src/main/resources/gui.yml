@@ -1,0 +1,10 @@
+title: "&bWordle GUI"
+border:
+  material: STAINED_GLASS_PANE
+  data: 0
+word-index:
+  0: 2
+  1: 11
+  2: 20
+  3: 29
+  4: 38
