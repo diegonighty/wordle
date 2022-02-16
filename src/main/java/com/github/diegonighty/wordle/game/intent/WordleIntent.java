@@ -3,25 +3,22 @@ package com.github.diegonighty.wordle.game.intent;
 import com.github.diegonighty.wordle.game.WordleGame;
 import com.github.diegonighty.wordle.word.WordType;
 
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
-import java.util.concurrent.atomic.AtomicInteger;
 
 public class WordleIntent {
 
-	private final List<WordleIntentPart> parts;
+	private final WordleIntentPart[] parts;
 
 	private final boolean correct;
 	private final int badPositions;
 
-	private WordleIntent(List<WordleIntentPart> parts, boolean correct, int badPositions) {
+	private WordleIntent(WordleIntentPart[] parts, boolean correct, int badPositions) {
 		this.parts = parts;
 		this.correct = correct;
 		this.badPositions = badPositions;
 	}
 
-	public List<WordleIntentPart> getParts() {
+	public WordleIntentPart[] getParts() {
 		return parts;
 	}
 
@@ -35,12 +32,16 @@ public class WordleIntent {
 
 	//TODO recreate this algorithm?
 	public static WordleIntent createOf(String intentPhrase, WordleGame game) {
-		List<WordleIntentPart> parts = new ArrayList<>();
+		WordleIntentPart[] parts = new WordleIntentPart[5];
 		String realPhrase = game.getPhrase();
 
 		if (realPhrase.equals(intentPhrase)) {
-			for (char letter : intentPhrase.toCharArray()) {
-				parts.add(new WordleIntentPart(letter, WordType.CORRECT));
+			char[] intentPhraseArray = intentPhrase.toCharArray();
+
+			for (int i = 0; i < intentPhraseArray.length; i++) {
+				char letter = intentPhraseArray[i];
+
+				parts[i] = new WordleIntentPart(letter, WordType.CORRECT);
 			}
 
 			return new WordleIntent(parts, true, 0);
@@ -50,7 +51,7 @@ public class WordleIntent {
 		char[] sortedRealPhraseArray = realPhrase.toCharArray();
 		char[] intentPhraseArray = intentPhrase.toCharArray();
 
-		AtomicInteger badPositions = new AtomicInteger(0);
+		int badPositions = 0;
 
 		Arrays.sort(sortedRealPhraseArray);
 
@@ -58,16 +59,17 @@ public class WordleIntent {
 			char actualChar = intentPhraseArray[i];
 
 			if (realPhraseArray[i] == actualChar) {
-				parts.add(new WordleIntentPart(actualChar, WordType.CORRECT));
+				parts[i] = new WordleIntentPart(actualChar, WordType.CORRECT);
 			} else if (Arrays.binarySearch(sortedRealPhraseArray, actualChar) != -1) {
-				badPositions.incrementAndGet();
-				parts.add(new WordleIntentPart(actualChar, WordType.BAD_POSITION));
+				badPositions++;
+
+				parts[i] = new WordleIntentPart(actualChar, WordType.BAD_POSITION);
 			} else {
-				parts.add(new WordleIntentPart(actualChar, WordType.NORMAL));
+				parts[i] = new WordleIntentPart(actualChar, WordType.NORMAL);
 			}
 		}
 
-		return new WordleIntent(parts, false, badPositions.get());
+		return new WordleIntent(parts, false, badPositions);
 	}
 
 	public static class WordleIntentPart {
