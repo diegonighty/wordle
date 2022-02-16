@@ -65,6 +65,11 @@ public class WordleGUIListenerHandler implements Listener {
 		}
 
 		User user = gameService.findUserById(player.getUniqueId());
+		if (user.statisticOf().isWonToday() || user.getPlayer().getCurrentIntents().size() >= 5) {
+			event.setCancelled(true);
+			return;
+		}
+
 		Inventory topInventory = event.getView().getTopInventory();
 
 		if (key == keyboardService.getMarkKey()) {
