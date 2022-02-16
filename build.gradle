@@ -1,0 +1,42 @@
+plugins {
+    id("java")
+    id("com.github.johnrengelman.shadow") version("7.0.0")
+}
+
+group(groupName)
+version(versionString)
+
+repositories {
+    mavenCentral()
+
+    maven { url("https://repo.unnamed.team/repository/unnamed-releases/") }
+    maven { url("https://repo.unnamed.team/repository/unnamed-snapshots/") }
+
+    maven { url("https://oss.sonatype.org/content/repositories/snapshots/") }
+    maven { url("https://hub.spigotmc.org/nexus/content/repositories/snapshots/") }
+}
+
+shadowJar {
+    archiveFileName.set("${rootProjectName}-${name} v${versionString}.jar")
+
+    def relocatedDomains = ["me", "team", "org", "net", "antlr"]
+
+    relocatedDomains.forEach({
+        relocate(it, "${libraryPackage}")
+    })
+}
+
+dependencies {
+    //annotations
+    implementation("org.jetbrains:annotations:16.0.2")
+
+    //spigot
+    compileOnly("org.spigotmc:spigot-api:1.8.8-R0.1-SNAPSHOT")
+
+    //gui
+    implementation("team.unnamed.gui:core:2.3.3-SNAPSHOT")
+
+    //database connectivity (mysql)
+    implementation("com.zaxxer:HikariCP:3.4.5")
+    implementation("org.jdbi:jdbi3-core:3.1.0")
+}
