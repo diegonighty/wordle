@@ -19,11 +19,10 @@ repositories {
 shadowJar {
     archiveFileName.set("${rootProjectName}-${name} v${versionString}.jar")
 
-    def relocatedDomains = ["me", "team", "org", "net", "antlr"]
-
-    relocatedDomains.forEach({
-        relocate(it, "${libraryPackage}")
-    })
+    relocate("org.jetbrains", "${libraryPackage}.annotations");
+    relocate("team.unnamed.gui", "${libraryPackage}.gui")
+    relocate("com.zaxxer", "${libraryPackage}.hikaricp")
+    relocate("org.jdbi", "${libraryPackage}.jdbi")
 }
 
 dependencies {
