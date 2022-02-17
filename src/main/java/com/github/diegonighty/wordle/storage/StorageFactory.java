@@ -42,7 +42,7 @@ public class StorageFactory {
 	public StorageSource<?> createNewSource() {
 		switch (type) {
 			case SQL:
-				return new SQLStorageSource(dataSource);
+				return new SQLStorageSource(dataSource.getConfigurationSection("credentials"));
 			default:
 				throw new RuntimeException("Not supported storage type!");
 		}
