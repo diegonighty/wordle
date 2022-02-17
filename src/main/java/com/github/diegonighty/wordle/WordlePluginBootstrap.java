@@ -14,14 +14,17 @@ import com.github.diegonighty.wordle.storage.StorageFactory;
 import com.github.diegonighty.wordle.storage.source.StorageSource;
 import com.github.diegonighty.wordle.word.HeadWordDictionaryService;
 import com.github.diegonighty.wordle.word.WordGeneratorHandler;
-import org.bukkit.Bukkit;
+import org.bukkit.plugin.PluginManager;
+import team.unnamed.gui.core.GUIListeners;
 
 public class WordlePluginBootstrap {
 
 	private final WordlePluginLoader loader;
+	private final PluginManager pluginManager;
 
 	public WordlePluginBootstrap(WordlePluginLoader loader) {
 		this.loader = loader;
+		this.pluginManager = loader.getServer().getPluginManager();
 	}
 
 	public void setupStorage() {
@@ -75,7 +78,8 @@ public class WordlePluginBootstrap {
 
 		loader.setWordleGUIProvider(new WordleGUIProvider(gui, listenerHandler));
 
-		Bukkit.getPluginManager().registerEvents(listenerHandler, loader);
+		pluginManager.registerEvents(listenerHandler, loader);
+		pluginManager.registerEvents(new GUIListeners(), loader);
 	}
 
 	public void registerCommands() {
