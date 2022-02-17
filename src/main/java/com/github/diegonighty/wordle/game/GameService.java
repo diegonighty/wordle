@@ -6,6 +6,7 @@ import com.github.diegonighty.wordle.statistic.WordlePlayerStatistic;
 import com.github.diegonighty.wordle.storage.GameStorage;
 import com.github.diegonighty.wordle.storage.UserStorage;
 import com.github.diegonighty.wordle.user.User;
+import com.github.diegonighty.wordle.word.WordGeneratorHandler;
 
 import java.util.UUID;
 
@@ -14,9 +15,31 @@ public class GameService {
 	private final GameStorage gameStorage;
 	private final UserStorage userStorage;
 
-	public GameService(GameStorage gameStorage, UserStorage userStorage) {
+	private final WordGeneratorHandler wordGeneratorHandler;
+
+	public GameService(GameStorage gameStorage, UserStorage userStorage, WordGeneratorHandler wordGeneratorHandler) {
 		this.gameStorage = gameStorage;
 		this.userStorage = userStorage;
+		this.wordGeneratorHandler = wordGeneratorHandler;
+	}
+
+	public void setupGame() {
+		WordleGame game = getActualGame();
+		if (game == null) {
+			gameStorage.loadGame();
+
+			WordleGame gameLoaded = getActualGame();
+			if (gameLoaded == null) {
+				createGame();
+			}
+		}
+	}
+
+	public WordleGame createGame() {
+		WordleGame wordleGame = new WordleGame(UUID.randomUUID(), wordGeneratorHandler.chooseRandomWord());
+		gameStorage.updateGame(wordleGame);
+
+		return wordleGame;
 	}
 
 	public boolean testPhrase(User user, WordleGame game, String phrase) {
