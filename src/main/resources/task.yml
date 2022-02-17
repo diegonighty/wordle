@@ -1,0 +1,6 @@
+zone-id: "America/Montreal"
+#HOUR OF DAY
+time-restart:
+  hour: 23
+  minute: 0
+  second: 0
