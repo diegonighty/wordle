@@ -7,6 +7,7 @@ import com.github.diegonighty.wordle.keyboard.KeyboardInputHandler;
 import com.github.diegonighty.wordle.keyboard.KeyboardService;
 import com.github.diegonighty.wordle.storage.GameStorage;
 import com.github.diegonighty.wordle.storage.UserStorage;
+import com.github.diegonighty.wordle.user.UserService;
 import com.github.diegonighty.wordle.word.HeadWordDictionaryService;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -28,6 +29,7 @@ public class WordlePluginLoader extends JavaPlugin {
 	private KeyboardInputHandler keyboardInputHandler;
 
 	private GameService gameService;
+	private UserService userService;
 
 	private WordleGUIProvider wordleGUIProvider;
 	private WordleGUIListenerHandler wordleGUIListenerHandler;
@@ -60,6 +62,7 @@ public class WordlePluginLoader extends JavaPlugin {
 		bootstrap.setupKeyboard();
 		bootstrap.setupGame();
 		bootstrap.setupGui();
+		bootstrap.setupUserServices();
 		bootstrap.registerCommands();
 
 		counter.finish("Starting all WordleCraft services took %s ms");
@@ -134,6 +137,14 @@ public class WordlePluginLoader extends JavaPlugin {
 
 	public void setGameService(GameService gameService) {
 		this.gameService = gameService;
+	}
+
+	public UserService getUserService() {
+		return userService;
+	}
+
+	public void setUserService(UserService userService) {
+		this.userService = userService;
 	}
 
 	private static class TaskTimeCount {

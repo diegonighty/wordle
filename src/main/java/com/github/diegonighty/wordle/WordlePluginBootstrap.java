@@ -12,6 +12,8 @@ import com.github.diegonighty.wordle.keyboard.KeyboardService;
 import com.github.diegonighty.wordle.storage.GameStorage;
 import com.github.diegonighty.wordle.storage.StorageFactory;
 import com.github.diegonighty.wordle.storage.source.StorageSource;
+import com.github.diegonighty.wordle.user.UserDataHandlerListener;
+import com.github.diegonighty.wordle.user.UserService;
 import com.github.diegonighty.wordle.word.HeadWordDictionaryService;
 import com.github.diegonighty.wordle.word.WordGeneratorHandler;
 import org.bukkit.plugin.PluginManager;
@@ -80,6 +82,14 @@ public class WordlePluginBootstrap {
 
 		pluginManager.registerEvents(listenerHandler, loader);
 		pluginManager.registerEvents(new GUIListeners(), loader);
+	}
+
+	public void setupUserServices() {
+		UserService userService = new UserService(loader.getUserStorage(), loader.getGameService());
+		UserDataHandlerListener userDataHandlerListener = new UserDataHandlerListener(userService);
+
+		pluginManager.registerEvents(userDataHandlerListener, loader);
+		loader.setUserService(userService);
 	}
 
 	public void registerCommands() {
