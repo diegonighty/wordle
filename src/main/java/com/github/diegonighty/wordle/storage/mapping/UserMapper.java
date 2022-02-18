@@ -2,6 +2,7 @@ package com.github.diegonighty.wordle.storage.mapping;
 
 import com.github.diegonighty.wordle.game.WordlePlayer;
 import com.github.diegonighty.wordle.statistic.WordlePlayerStatistic;
+import com.github.diegonighty.wordle.storage.implementation.sql.dsl.Constraint;
 import com.github.diegonighty.wordle.storage.implementation.sql.dsl.DataType;
 import com.github.diegonighty.wordle.storage.implementation.sql.dsl.Element;
 import com.github.diegonighty.wordle.storage.implementation.sql.dsl.Table;
@@ -20,7 +21,7 @@ public class UserMapper implements TableMapper<User> {
 
 	private final static Table TABLE = new Table(
 			"user",
-			Element.create("id", DataType.UUID),
+			Element.create("id", DataType.UUID, Constraint.PRIMARY, Constraint.UNIQUE),
 			Element.create("name", DataType.STRING),
 			Element.create("wonToday", DataType.BOOLEAN),
 			Element.create("wins", DataType.NUMBER),
@@ -35,14 +36,14 @@ public class UserMapper implements TableMapper<User> {
 	public Map<String, Object> map(User object) {
 		Map<String, Object> map = new HashMap<>();
 
-		map.put("id", object.getId());
+		map.put("id", object.getId().toString());
 		map.put("name", object.getName());
 		map.put("wonToday", object.statisticOf().isWonToday());
 		map.put("wins", object.statisticOf().wins());
 		map.put("fails", object.statisticOf().fails());
 		map.put("badPositions", object.statisticOf().badPositions());
 		map.put("recordOfTries", object.statisticOf().recordOfTries());
-		map.put("currentGame", object.getPlayer().getCurrentGame());
+		map.put("currentGame", object.getPlayer().getCurrentGame().toString());
 		map.put("currentIntents", WordleIntentsSerializer.toJSON(object.getPlayer().getCurrentIntents()));
 
 		return map;

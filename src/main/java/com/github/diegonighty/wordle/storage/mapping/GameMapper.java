@@ -26,7 +26,7 @@ public class GameMapper implements TableMapper<WordleGame> {
 	public Map<String, Object> map(WordleGame object) {
 		Map<String, Object> map = new HashMap<>();
 
-		map.put("id", object.getId());
+		map.put("id", object.getId().toString());
 		map.put("phrase", object.getPhrase());
 
 		return map;
