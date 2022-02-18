@@ -156,8 +156,8 @@ public class WordleGUIListenerHandler implements Listener {
 		keyboardService.removeKeyboard(bukkitPlayer);
 		inputHandler.clearInput(bukkitPlayer);
 
-		bukkitPlayer.updateInventory();
 		gameService.saveAsync(player);
+		executor.executeTaskWithDelay(bukkitPlayer::updateInventory, 10);
 	}
 
 	public int getStartSlot(int index) {

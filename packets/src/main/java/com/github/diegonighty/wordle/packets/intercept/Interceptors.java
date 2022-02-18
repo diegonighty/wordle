@@ -20,11 +20,6 @@ public class Interceptors {
 			ClientKeyboardPressKey event = new ClientKeyboardPressKey(player, view, slot);
 
 			Bukkit.getPluginManager().callEvent(event);
-
-			if (event.cancelPacket()) {
-				player.updateInventory();
-			}
-
 			return event.cancelPacket();
 		}, bukkitExecutor).join();
 	}
