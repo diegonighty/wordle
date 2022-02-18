@@ -34,8 +34,8 @@ public class SQLUserStorage extends CachedAbstractUserStorage {
 	protected @Nullable User findByNameInStorage(String playerName) {
 		try (Handle handle = connection.open()) {
 			return handle
-					.select("SELECT * FROM :table WHERE name = :name")
-					.bind("table", table.getName())
+					.select("SELECT * FROM <TABLE> WHERE name = :name")
+					.define("TABLE", table.getName())
 					.bind("name", playerName)
 					.map(mapper)
 					.findFirst()
@@ -47,8 +47,8 @@ public class SQLUserStorage extends CachedAbstractUserStorage {
 	protected @Nullable User findByIdInStorage(UUID id) {
 		try (Handle handle = connection.open()) {
 			return handle
-					.select("SELECT * FROM :table WHERE id = :id")
-					.bind("table", table.getName())
+					.select("SELECT * FROM <TABLE> WHERE id = :id")
+					.define("TABLE", table.getName())
 					.bind("id", id.toString())
 					.map(mapper)
 					.findFirst()
@@ -60,10 +60,10 @@ public class SQLUserStorage extends CachedAbstractUserStorage {
 	protected void updateInStorage(User user) {
 		try (Handle handle = connection.open()) {
 			handle
-					.createUpdate("REPLACE INTO :table (:columns) VALUES (:values)")
-					.bind("table", table.getName())
-					.bind("columns", table.getColumns())
-					.bind("values", table.getParameters())
+					.createUpdate("REPLACE INTO <TABLE> (<COLUMNS>) VALUES (<VALUES>)")
+					.define("TABLE", table.getName())
+					.define("COLUMNS", table.getColumns())
+					.define("VALUES", table.getParameters())
 					.bindMap(mapper.map(user))
 					.execute();
 		}

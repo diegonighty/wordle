@@ -32,8 +32,8 @@ public class SQLGameStorage extends AbstractGameStorage {
 	protected @Nullable WordleGame getGameInStorage() {
 		try (Handle handle = connection.open()) {
 			return handle
-					.select("SELECT * FROM :table")
-					.bind("table", table.getName())
+					.select("SELECT * FROM <TABLE>")
+					.define("TABLE", table.getName())
 					.map(mapper)
 					.findFirst()
 					.orElse(null);
@@ -44,10 +44,10 @@ public class SQLGameStorage extends AbstractGameStorage {
 	protected void updateGameInStorage(WordleGame game) {
 		try (Handle handle = connection.open()) {
 			handle
-					.createUpdate("REPLACE INTO :table (:columns) VALUES (:values)")
-					.bind("table", table.getName())
-					.bind("columns", table.getColumns())
-					.bind("values", table.getParameters())
+					.createUpdate("REPLACE INTO <TABLE> (<COLUMNS>) VALUES (<VALUES>)")
+					.define("TABLE", table.getName())
+					.define("COLUMNS", table.getColumns())
+					.define("VALUES", table.getParameters())
 					.bindMap(mapper.map(game))
 					.execute();
 		}
@@ -57,9 +57,8 @@ public class SQLGameStorage extends AbstractGameStorage {
 	protected void deleteGames() {
 		try (Handle handle = connection.open()) {
 			handle
-					.createUpdate("DELETE FROM :table")
-					.bind("table", table.getName())
-					.bind("column", table.getFirstPrimaryColumn())
+					.createUpdate("TRUNCATE TABLE <TABLE>")
+					.define("TABLE", table.getName())
 					.execute();
 		}
 	}
