@@ -60,7 +60,7 @@ public class WordleIntent {
 
 			if (realPhraseArray[i] == actualChar) {
 				parts[i] = new WordleIntentPart(actualChar, WordType.CORRECT);
-			} else if (Arrays.binarySearch(sortedRealPhraseArray, actualChar) != -1) {
+			} else if (Arrays.binarySearch(sortedRealPhraseArray, actualChar) >= 0) {
 				badPositions++;
 
 				parts[i] = new WordleIntentPart(actualChar, WordType.BAD_POSITION);

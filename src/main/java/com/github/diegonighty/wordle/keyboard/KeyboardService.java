@@ -2,10 +2,10 @@ package com.github.diegonighty.wordle.keyboard;
 
 import com.github.diegonighty.wordle.configuration.Configuration;
 import com.github.diegonighty.wordle.packets.PacketHandler;
+import com.github.diegonighty.wordle.packets.event.ClientKeyboardPressKey;
 import com.github.diegonighty.wordle.word.HeadWordDictionaryService;
 import com.github.diegonighty.wordle.word.WordType;
 import org.bukkit.entity.Player;
-import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
 import org.bukkit.plugin.Plugin;
@@ -41,6 +41,7 @@ public class KeyboardService {
 		PlayerInventory inventory = player.getInventory();
 
 		inventories.put(player.getUniqueId(), inventory.getContents());
+		//FakeInventory.clearInventoryFor(packetHandler, player);
 
 		int slot = 9;
 		for (int i = 0; i < KEYBOARD.length; i++) {
@@ -56,7 +57,7 @@ public class KeyboardService {
 		packetHandler.setFakeItem(player, (byte) -2, getMarkSlot(), getMarkItem());
 	}
 
-	public char getClickedKey(InventoryClickEvent event) {
+	public char getClickedKey(ClientKeyboardPressKey event) {
 		//TODO maybe change this?
 		int index = event.getRawSlot() - START_KEYBOARD_SLOT;
 
@@ -74,8 +75,8 @@ public class KeyboardService {
 	public void removeKeyboard(Player player) {
 		PlayerInventory inventory = player.getInventory();
 
-		inventory.clear();
-		inventory.setContents(inventories.get(player.getUniqueId()));
+		//inventory.clear();
+		//inventory.setContents(inventories.get(player.getUniqueId()));
 
 		inventories.remove(player.getUniqueId());
 	}

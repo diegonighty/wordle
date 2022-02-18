@@ -49,7 +49,6 @@ public class WordleGUICommand extends Command {
 			Player player = (Player) sender;
 
 			byte window = (byte) Integer.parseInt(args[0]);
-
 			packetHandler.setFakeItem(player, window, Integer.parseInt(args[1]), new ItemStack(Material.valueOf(args[2])));
 
 			return false;

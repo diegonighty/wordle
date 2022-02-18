@@ -1,11 +1,14 @@
 package com.github.diegonighty.wordle.gui.listener;
 
+import com.github.diegonighty.wordle.concurrent.bukkit.BukkitExecutor;
+import com.github.diegonighty.wordle.concurrent.bukkit.BukkitExecutorProvider;
 import com.github.diegonighty.wordle.configuration.Configuration;
 import com.github.diegonighty.wordle.game.GameService;
 import com.github.diegonighty.wordle.game.intent.WordleIntent;
 import com.github.diegonighty.wordle.game.intent.WordleIntent.WordleIntentPart;
 import com.github.diegonighty.wordle.keyboard.KeyboardInputHandler;
 import com.github.diegonighty.wordle.keyboard.KeyboardService;
+import com.github.diegonighty.wordle.packets.event.ClientKeyboardPressKey;
 import com.github.diegonighty.wordle.user.User;
 import com.github.diegonighty.wordle.word.HeadWordDictionaryService;
 import com.github.diegonighty.wordle.word.WordType;
@@ -13,7 +16,6 @@ import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.event.inventory.InventoryOpenEvent;
 import org.bukkit.inventory.Inventory;
@@ -22,6 +24,8 @@ import org.bukkit.inventory.ItemStack;
 import java.util.List;
 
 public class WordleGUIListenerHandler implements Listener {
+
+	private final BukkitExecutor executor = BukkitExecutorProvider.get();
 
 	private final GameService gameService;
 
@@ -46,26 +50,26 @@ public class WordleGUIListenerHandler implements Listener {
 	}
 
 	@EventHandler
-	public void onClickKey(InventoryClickEvent event) {
-		if (event.getClickedInventory() == null) {
+	public void onClickKey(ClientKeyboardPressKey event) {
+		if (event.clickedOutside()) {
 			return;
 		}
 
-		if (!keyboardService.isTyping(event.getWhoClicked().getUniqueId())) {
+		if (!keyboardService.isTyping(event.getPlayer().getUniqueId())) {
 			return;
 		}
 
-		Player player = (Player) event.getWhoClicked();
+		Player player = event.getPlayer();
 		char key = keyboardService.getClickedKey(event);
 
 		if (key == keyboardService.getUnknownKey()) {
-			event.setCancelled(true);
+			event.setCancelPacket(true);
 			return;
 		}
 
 		User user = gameService.findUserById(player.getUniqueId());
 		if (user.statisticOf().isWonToday() || user.getPlayer().getCurrentIntents().size() >= 5) {
-			event.setCancelled(true);
+			event.setCancelPacket(true);
 			return;
 		}
 
@@ -79,7 +83,7 @@ public class WordleGUIListenerHandler implements Listener {
 			handleWrite(topInventory, user, player, key);
 		}
 
-		event.setCancelled(true);
+		event.setCancelPacket(true);
 	}
 
 	private void handleWrite(Inventory topInventory, User user, Player bukkitPlayer, char key) {
@@ -140,7 +144,9 @@ public class WordleGUIListenerHandler implements Listener {
 	}
 
 	public boolean handleOpenEvent(InventoryOpenEvent event) {
-		keyboardService.setKeyboard((Player) event.getPlayer());
+		executor.executeTaskWithDelay(() -> {
+			keyboardService.setKeyboard((Player) event.getPlayer());
+		}, 10);
 		return false;
 	}
 
@@ -150,6 +156,7 @@ public class WordleGUIListenerHandler implements Listener {
 		keyboardService.removeKeyboard(bukkitPlayer);
 		inputHandler.clearInput(bukkitPlayer);
 
+		bukkitPlayer.updateInventory();
 		gameService.saveAsync(player);
 	}
 

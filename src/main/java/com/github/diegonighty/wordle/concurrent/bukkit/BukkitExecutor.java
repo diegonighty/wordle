@@ -32,4 +32,8 @@ public class BukkitExecutor implements Executor {
 		);
 	}
 
+	public void executeTaskWithDelay(Runnable command, long ticks) {
+		Bukkit.getScheduler().scheduleSyncDelayedTask(plugin, command, ticks);
+	}
+
 }
