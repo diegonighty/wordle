@@ -26,7 +26,7 @@ public class WordleGUIProvider {
 	}
 
 	public Inventory buildFor(User user) {
-		GUIBuilder builder = GUIBuilder.builder(gui.getString("title-gui"), 5);
+		GUIBuilder builder = GUIBuilder.builder(gui.getString("title"), 5);
 
 		fillBorders(builder);
 		placeIntents(builder, user.getPlayer().getCurrentIntents());
@@ -60,10 +60,10 @@ public class WordleGUIProvider {
 				.setItemStack(gui.getItem("border"))
 				.build();
 
-		builder.fillColumn(border, 0);
 		builder.fillColumn(border, 1);
-		builder.fillColumn(border, 7);
+		builder.fillColumn(border, 2);
 		builder.fillColumn(border, 8);
+		builder.fillColumn(border, 9);
 	}
 
 }

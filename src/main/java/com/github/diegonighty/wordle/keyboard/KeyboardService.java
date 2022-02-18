@@ -22,8 +22,8 @@ public class KeyboardService {
 	private final static char MARK_KEY = '1';
 	private final static char BACKSPACE_KEY = '2';
 
-	private final static int START_KEYBOARD_SLOT = 54;
-	private final static int START_HOTBAR_KEYBOARD_SLOT = 81;
+	private final static int START_KEYBOARD_SLOT = 45;
+	private final static int START_HOTBAR_KEYBOARD_SLOT = 72;
 
 	private final Map<UUID, ItemStack[]> inventories = new HashMap<>();
 
