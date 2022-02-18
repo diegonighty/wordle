@@ -22,19 +22,19 @@ public class HeadWordDictionaryService implements Configurable {
 
 	public ItemStack getHead(Character letter, WordType type) {
 		return ItemBuilder.newSkullBuilder(1)
-				.setUrl(dictionary.get(letter, type))
+				.setUrl(getURL(letter, type))
 				.setName(letter.toString())
 				.build();
 	}
 
 	public ItemBuilder getMarkHead() {
 		return ItemBuilder.newSkullBuilder(1)
-				.setUrl(dictionary.get('1', WordType.MISC));
+				.setUrl(getURL('1', WordType.MISC));
 	}
 
 	public ItemBuilder getBackspaceHead() {
 		return ItemBuilder.newSkullBuilder(1)
-				.setUrl(dictionary.get('2', WordType.MISC));
+				.setUrl(getURL('2', WordType.MISC));
 	}
 
 	private void loadHeads(WordType type) {
@@ -53,6 +53,13 @@ public class HeadWordDictionaryService implements Configurable {
 		loadHeads(WordType.NORMAL);
 		loadHeads(WordType.BAD_POSITION);
 		loadHeads(WordType.MISC);
+	}
+
+	private String getURL(Character row, WordType type) {
+		return String.format(
+				config.getString("texture-repository"),
+				dictionary.get(row, type)
+		);
 	}
 
 }
