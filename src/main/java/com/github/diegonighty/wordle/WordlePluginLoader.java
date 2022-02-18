@@ -5,6 +5,7 @@ import com.github.diegonighty.wordle.gui.WordleGUIProvider;
 import com.github.diegonighty.wordle.gui.listener.WordleGUIListenerHandler;
 import com.github.diegonighty.wordle.keyboard.KeyboardInputHandler;
 import com.github.diegonighty.wordle.keyboard.KeyboardService;
+import com.github.diegonighty.wordle.packets.PacketHandler;
 import com.github.diegonighty.wordle.storage.GameStorage;
 import com.github.diegonighty.wordle.storage.UserStorage;
 import com.github.diegonighty.wordle.user.UserService;
@@ -19,6 +20,8 @@ public class WordlePluginLoader extends JavaPlugin {
 
 	private final WordlePluginBootstrap bootstrap;
 	private final TaskTimeCount counter;
+
+	private PacketHandler packetHandler;
 
 	private GameStorage gameStorage;
 	private UserStorage userStorage;
@@ -58,6 +61,7 @@ public class WordlePluginLoader extends JavaPlugin {
 
 		counter.start();
 
+		bootstrap.setupPacketFactory();
 		bootstrap.setupDictionaries();
 		bootstrap.setupKeyboard();
 		bootstrap.setupGame();
@@ -145,6 +149,14 @@ public class WordlePluginLoader extends JavaPlugin {
 
 	public void setUserService(UserService userService) {
 		this.userService = userService;
+	}
+
+	public PacketHandler getPacketHandler() {
+		return packetHandler;
+	}
+
+	public void setPacketHandler(PacketHandler packetHandler) {
+		this.packetHandler = packetHandler;
 	}
 
 	private static class TaskTimeCount {

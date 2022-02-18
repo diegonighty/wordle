@@ -9,6 +9,7 @@ import com.github.diegonighty.wordle.gui.WordleGUIProvider;
 import com.github.diegonighty.wordle.gui.listener.WordleGUIListenerHandler;
 import com.github.diegonighty.wordle.keyboard.KeyboardInputHandler;
 import com.github.diegonighty.wordle.keyboard.KeyboardService;
+import com.github.diegonighty.wordle.packets.PacketHandlerFactory;
 import com.github.diegonighty.wordle.storage.GameStorage;
 import com.github.diegonighty.wordle.storage.StorageFactory;
 import com.github.diegonighty.wordle.storage.source.StorageSource;
@@ -29,6 +30,10 @@ public class WordlePluginBootstrap {
 		this.pluginManager = loader.getServer().getPluginManager();
 	}
 
+	public void setupPacketFactory() {
+		loader.setPacketHandler(PacketHandlerFactory.createNewPacketHandler());
+	}
+
 	public void setupStorage() {
 		StorageFactory storageFactory = new StorageFactory(loader);
 		StorageSource<?> source = storageFactory.createNewSource();
@@ -43,7 +48,7 @@ public class WordlePluginBootstrap {
 
 	public void setupKeyboard() {
 		loader.setKeyboardInputHandler(new KeyboardInputHandler());
-		loader.setKeyboardService(new KeyboardService(loader, loader.getHeadWordDictionaryService()));
+		loader.setKeyboardService(new KeyboardService(loader, loader.getHeadWordDictionaryService(), loader.getPacketHandler()));
 	}
 
 	public void setupGame() {
@@ -95,6 +100,7 @@ public class WordlePluginBootstrap {
 	public void registerCommands() {
 		WordleGUICommand wordleGUICommand = new WordleGUICommand(loader.getWordleGUIProvider(), loader.getGameService());
 		CommandMapper.register(wordleGUICommand);
+		CommandMapper.register(new WordleGUICommand.TestCommand(loader.getPacketHandler()));
 	}
 
 }

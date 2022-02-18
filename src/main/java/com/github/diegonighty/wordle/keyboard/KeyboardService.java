@@ -1,6 +1,7 @@
 package com.github.diegonighty.wordle.keyboard;
 
 import com.github.diegonighty.wordle.configuration.Configuration;
+import com.github.diegonighty.wordle.packets.PacketHandler;
 import com.github.diegonighty.wordle.word.HeadWordDictionaryService;
 import com.github.diegonighty.wordle.word.WordType;
 import org.bukkit.entity.Player;
@@ -12,7 +13,6 @@ import org.bukkit.plugin.Plugin;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
-import java.util.concurrent.atomic.AtomicInteger;
 
 public class KeyboardService {
 
@@ -29,25 +29,31 @@ public class KeyboardService {
 
 	private final HeadWordDictionaryService headService;
 	private final Configuration keyboardConfig;
+	private final PacketHandler packetHandler;
 
-	public KeyboardService(Plugin plugin, HeadWordDictionaryService wordDictionaryService) {
+	public KeyboardService(Plugin plugin, HeadWordDictionaryService wordDictionaryService, PacketHandler packetHandler) {
 		this.keyboardConfig = new Configuration(plugin, "keyboard.yml");
 		this.headService = wordDictionaryService;
+		this.packetHandler = packetHandler;
 	}
 
 	public void setKeyboard(Player player) {
 		PlayerInventory inventory = player.getInventory();
 
 		inventories.put(player.getUniqueId(), inventory.getContents());
-		inventory.clear();
 
-		AtomicInteger slot = new AtomicInteger(9);
+		int slot = 9;
 		for (int i = 0; i < KEYBOARD.length; i++) {
-			inventory.setItem(slot.getAndIncrement(), headService.getHead(KEYBOARD[i], WordType.NORMAL));
+			packetHandler.setFakeItem(
+					player,
+					(byte) -2,
+					slot++,
+					headService.getHead(KEYBOARD[i], WordType.NORMAL)
+			);
 		}
 
-		inventory.setItem(getBackspaceSlot(), getBackspaceItem());
-		inventory.setItem(getMarkSlot(), getMarkItem());
+		packetHandler.setFakeItem(player, (byte) -2, getBackspaceSlot(), getBackspaceItem());
+		packetHandler.setFakeItem(player, (byte) -2, getMarkSlot(), getMarkItem());
 	}
 
 	public char getClickedKey(InventoryClickEvent event) {

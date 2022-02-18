@@ -6,14 +6,16 @@ plugins {
 group(groupName)
 version(versionString)
 
-repositories {
-    mavenCentral()
+allprojects {
+    repositories {
+        mavenCentral()
 
-    maven { url("https://repo.unnamed.team/repository/unnamed-releases/") }
-    maven { url("https://repo.unnamed.team/repository/unnamed-snapshots/") }
+        maven { url("https://repo.unnamed.team/repository/unnamed-releases/") }
+        maven { url("https://repo.unnamed.team/repository/unnamed-snapshots/") }
 
-    maven { url("https://oss.sonatype.org/content/repositories/snapshots/") }
-    maven { url("https://hub.spigotmc.org/nexus/content/repositories/snapshots/") }
+        maven { url("https://oss.sonatype.org/content/repositories/snapshots/") }
+        maven { url("https://hub.spigotmc.org/nexus/content/repositories/snapshots/") }
+    }
 }
 
 shadowJar {
@@ -38,4 +40,16 @@ dependencies {
     //database connectivity (mysql)
     implementation("com.zaxxer:HikariCP:4.0.3")
     implementation("org.jdbi:jdbi3-core:3.1.0")
+
+    //packet compatibility
+    implementation(project(":packets"))
+
+    [
+        "1_8_8-R0_1",
+        "1_12_2-R0_1",
+        "1_16_5-R0_1",
+        "1_17_1-R0_1"
+    ].forEach({
+        implementation(project(":packets:${it}"))
+    })
 }
