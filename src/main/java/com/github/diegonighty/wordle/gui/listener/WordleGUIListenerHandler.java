@@ -8,7 +8,9 @@ import com.github.diegonighty.wordle.game.intent.WordleIntent;
 import com.github.diegonighty.wordle.game.intent.WordleIntent.WordleIntentPart;
 import com.github.diegonighty.wordle.keyboard.KeyboardInputHandler;
 import com.github.diegonighty.wordle.keyboard.KeyboardService;
+import com.github.diegonighty.wordle.packets.PacketHandler;
 import com.github.diegonighty.wordle.packets.event.ClientKeyboardPressKey;
+import com.github.diegonighty.wordle.packets.event.ClientKeyboardUpdate;
 import com.github.diegonighty.wordle.user.User;
 import com.github.diegonighty.wordle.word.HeadWordDictionaryService;
 import com.github.diegonighty.wordle.word.WordType;
@@ -28,6 +30,7 @@ public class WordleGUIListenerHandler implements Listener {
 	private final BukkitExecutor executor = BukkitExecutorProvider.get();
 
 	private final GameService gameService;
+	private final PacketHandler packetHandler;
 
 	private final KeyboardService keyboardService;
 	private final KeyboardInputHandler inputHandler;
@@ -37,16 +40,34 @@ public class WordleGUIListenerHandler implements Listener {
 
 	public WordleGUIListenerHandler(
 			GameService gameService,
+			PacketHandler packetHandler,
 			KeyboardService keyboardService,
 			KeyboardInputHandler inputHandler,
 			HeadWordDictionaryService headWordDictionaryService,
 			Configuration gui
 	) {
 		this.gameService = gameService;
+		this.packetHandler = packetHandler;
 		this.keyboardService = keyboardService;
 		this.inputHandler = inputHandler;
 		this.headWordDictionaryService = headWordDictionaryService;
 		this.gui = gui;
+	}
+
+	@EventHandler
+	public void onRefresh(ClientKeyboardUpdate event) {
+		if (!keyboardService.isTyping(event.getPlayer().getUniqueId())) {
+			return;
+		}
+
+		Player player = event.getPlayer();
+		if (event.getWindowID() != packetHandler.currentWindowID(player)) {
+			return;
+		}
+
+		executor.executeTaskWithDelay(() -> {
+			keyboardService.setKeyboard(player);
+		}, 1);
 	}
 
 	@EventHandler
@@ -83,6 +104,7 @@ public class WordleGUIListenerHandler implements Listener {
 			handleWrite(topInventory, user, player, key);
 		}
 
+		player.updateInventory();
 		event.setCancelPacket(true);
 	}
 
@@ -146,7 +168,7 @@ public class WordleGUIListenerHandler implements Listener {
 	public boolean handleOpenEvent(InventoryOpenEvent event) {
 		executor.executeTaskWithDelay(() -> {
 			keyboardService.setKeyboard((Player) event.getPlayer());
-		}, 10);
+		}, 1);
 		return false;
 	}
 
@@ -157,7 +179,7 @@ public class WordleGUIListenerHandler implements Listener {
 		inputHandler.clearInput(bukkitPlayer);
 
 		gameService.saveAsync(player);
-		executor.executeTaskWithDelay(bukkitPlayer::updateInventory, 10);
+		executor.executeTaskWithDelay(bukkitPlayer::updateInventory, 1);
 	}
 
 	public int getStartSlot(int index) {

@@ -4,6 +4,7 @@ import com.github.diegonighty.wordle.packets.intercept.PacketChannelDuplexHandle
 import net.minecraft.server.v1_16_R3.EntityPlayer;
 import net.minecraft.server.v1_16_R3.PacketPlayInWindowClick;
 import net.minecraft.server.v1_16_R3.PacketPlayOutSetSlot;
+import net.minecraft.server.v1_16_R3.PacketPlayOutWindowItems;
 import org.bukkit.craftbukkit.v1_16_R3.entity.CraftPlayer;
 import org.bukkit.craftbukkit.v1_16_R3.inventory.CraftItemStack;
 import org.bukkit.entity.Player;
@@ -36,6 +37,12 @@ public class PacketHandler1_16_5_R0_1 implements PacketHandler {
 		PacketChannelDuplexHandler.addInterceptor(
 				PacketPlayInWindowClick.class,
 				new KeyboardInterceptor1_16_5_R0_1(mainThreadExecutor)
+		);
+
+
+		PacketChannelDuplexHandler.addInterceptor(
+				PacketPlayOutWindowItems.class,
+				new KeyboardUpdate1_16_5_R0_1(mainThreadExecutor)
 		);
 	}
 

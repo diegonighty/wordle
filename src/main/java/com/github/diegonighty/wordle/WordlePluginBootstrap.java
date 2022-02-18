@@ -86,6 +86,7 @@ public class WordlePluginBootstrap {
 		Configuration gui = new Configuration(loader, "gui.yml");
 		WordleGUIListenerHandler listenerHandler = new WordleGUIListenerHandler(
 				loader.getGameService(),
+				loader.getPacketHandler(),
 				loader.getKeyboardService(),
 				loader.getKeyboardInputHandler(),
 				loader.getHeadWordDictionaryService(),
