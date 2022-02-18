@@ -1,3 +1,5 @@
+texture-repository: "http://textures.minecraft.net/texture/%s"
+
 normal:
   a: "17dd34924d2b6a213a5ed46ae5783f95373a9ef5ce5c88f9d736705983b97"
   b: "9eca98befd0d7efca9b11ebf4b2da459cc19a378114b3cdde67d4067afb896"
@@ -80,5 +82,5 @@ bad-position:
   y: "367477f9cb5f036438ce98ce697b91358cb97641c5d153a7e3888dae32e215"
   z: "cfa730b5ec73ceaf4aad524e207ff31df785e7ab6db1aeb3f1aa4d245ed2e"
 misc:
-  1: "a92e31ffb59c90ab08fc9dc1fe26802035a3a47c42fee63423bcdb4262ecb9b6"
+  1: "930f4537d214d38666e6304e9c851cd6f7e41a0eb7c25049c9d22c8c5f6545df"
   2: "c49d271c5df84f8a3c8aa5d15427f62839341dab52c619a5987d38fbe18e464"
