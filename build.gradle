@@ -36,6 +36,6 @@ dependencies {
     implementation("team.unnamed.gui:core:2.3.3-SNAPSHOT")
 
     //database connectivity (mysql)
-    implementation("com.zaxxer:HikariCP:3.4.5")
+    implementation("com.zaxxer:HikariCP:4.0.3")
     implementation("org.jdbi:jdbi3-core:3.1.0")
 }
