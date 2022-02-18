@@ -35,11 +35,9 @@ public class GameService {
 		}
 	}
 
-	public WordleGame createGame() {
+	public void createGame() {
 		WordleGame wordleGame = new WordleGame(UUID.randomUUID(), wordGeneratorHandler.chooseRandomWord());
 		gameStorage.updateGame(wordleGame);
-
-		return wordleGame;
 	}
 
 	public boolean testPhrase(User user, WordleGame game, String phrase) {
