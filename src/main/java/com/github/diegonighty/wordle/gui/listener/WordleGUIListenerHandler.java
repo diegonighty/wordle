@@ -78,9 +78,11 @@ public class WordleGUIListenerHandler implements Listener {
 		char key = keyboardService.getClickedKey(event);
 
 		if (key == keyboardService.getUnknownKey()) {
-			event.setCancelPacket(true);
+			event.setCancelPacket(false);
 			return;
 		}
+
+		player.updateInventory();
 
 		User user = gameService.findUserById(player.getUniqueId());
 		if (user.statisticOf().isWonToday() || user.getPlayer().getCurrentIntents().size() >= 5) {
@@ -98,7 +100,6 @@ public class WordleGUIListenerHandler implements Listener {
 			handleWrite(topInventory, user, player, key);
 		}
 
-		player.updateInventory();
 		event.setCancelPacket(true);
 	}
 
