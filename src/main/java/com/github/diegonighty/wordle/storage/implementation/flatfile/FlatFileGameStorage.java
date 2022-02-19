@@ -40,7 +40,7 @@ public class FlatFileGameStorage extends AbstractGameStorage {
 				.findFirst()
 				.orElse(null);
 
-		if (game == null) {
+		if (game == null || !game.exists()) {
 			return null;
 		}
 

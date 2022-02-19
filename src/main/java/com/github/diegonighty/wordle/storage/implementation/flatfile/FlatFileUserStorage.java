@@ -42,17 +42,17 @@ public class FlatFileUserStorage extends CachedAbstractUserStorage {
 	protected @Nullable User findByIdInStorage(UUID id) {
 		File file = getData(id);
 
-		if (file.exists()) {
-			try (Reader reader = new FileReader(file)) {
-				return SERIALIZER.fromJson(reader, User.class);
-			} catch (IOException e) {
-				throw new RuntimeException("Failed to serialize a " + file.getName() + " user!", e);
-			}
-		} else {
+		if (!file.exists()) {
 			return null;
 		}
 
+		try (Reader reader = new FileReader(file)) {
+			return SERIALIZER.fromJson(reader, User.class);
+		} catch (IOException e) {
+			throw new RuntimeException("Failed to serialize a " + file.getName() + " user!", e);
+		}
 	}
+
 
 	@Override
 	protected void updateInStorage(User user) {
