@@ -8,6 +8,7 @@ import com.github.diegonighty.wordle.configuration.Configuration;
 import java.time.Duration;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
+import java.util.concurrent.TimeUnit;
 
 public class GameTaskHandler {
 
@@ -27,7 +28,11 @@ public class GameTaskHandler {
 
 		long seconds = Duration.between(now, next).getSeconds();
 
-		executor.scheduleTaskAtFixedRateAsync(service::createGame, seconds);
+		executor.scheduleTaskAtFixedRateAsync(
+				service::createGame,
+				seconds,
+				TimeUnit.DAYS.toSeconds(1)
+		);
 	}
 
 	private ZonedDateTime getNextSchedule(ZonedDateTime now) {
