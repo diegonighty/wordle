@@ -23,11 +23,11 @@ public class BukkitExecutor implements Executor {
 		Bukkit.getScheduler().scheduleSyncDelayedTask(plugin, command);
 	}
 
-	public void scheduleTaskAtFixedRateAsync(Runnable command, long secondsDelay) {
+	public void scheduleTaskAtFixedRateAsync(Runnable command, long secondsDelay, long period) {
 		scheduledExecutorService.scheduleAtFixedRate(
 				command,
 				secondsDelay,
-				TimeUnit.DAYS.toSeconds(1),
+				period,
 				TimeUnit.SECONDS
 		);
 	}
