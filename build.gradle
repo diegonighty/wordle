@@ -19,7 +19,7 @@ allprojects {
 }
 
 shadowJar {
-    archiveFileName.set("${rootProjectName}-${name} v${versionString}.jar")
+    archiveBaseName.set("${rootProjectName}")
 
     relocate("org.jetbrains", "${libraryPackage}.annotations");
     relocate("team.unnamed.gui", "${libraryPackage}.gui")
