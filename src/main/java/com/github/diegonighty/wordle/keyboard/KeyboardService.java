@@ -1,17 +1,19 @@
 package com.github.diegonighty.wordle.keyboard;
 
+import com.github.diegonighty.wordle.concurrent.bukkit.BukkitExecutor;
+import com.github.diegonighty.wordle.concurrent.bukkit.BukkitExecutorProvider;
 import com.github.diegonighty.wordle.configuration.Configuration;
 import com.github.diegonighty.wordle.packets.PacketHandler;
 import com.github.diegonighty.wordle.packets.event.ClientKeyboardPressKey;
+import com.github.diegonighty.wordle.utils.FakeInventory;
 import com.github.diegonighty.wordle.word.HeadWordDictionaryService;
 import com.github.diegonighty.wordle.word.WordType;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.PlayerInventory;
 import org.bukkit.plugin.Plugin;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.UUID;
 
 public class KeyboardService {
@@ -25,10 +27,12 @@ public class KeyboardService {
 	private final static int START_KEYBOARD_SLOT = 45;
 	private final static int START_HOTBAR_KEYBOARD_SLOT = 72;
 
-	private final Map<UUID, ItemStack[]> inventories = new HashMap<>();
+	private final Set<UUID> writing = new HashSet<>();
 
 	private final HeadWordDictionaryService headService;
 	private final Configuration keyboardConfig;
+
+	private final BukkitExecutor bukkitExecutor = BukkitExecutorProvider.get();
 	private final PacketHandler packetHandler;
 
 	public KeyboardService(Plugin plugin, HeadWordDictionaryService wordDictionaryService, PacketHandler packetHandler) {
@@ -38,23 +42,24 @@ public class KeyboardService {
 	}
 
 	public void setKeyboard(Player player) {
-		PlayerInventory inventory = player.getInventory();
+		writing.add(player.getUniqueId());
 
-		inventories.put(player.getUniqueId(), inventory.getContents());
-		//FakeInventory.clearInventoryFor(packetHandler, player);
+		bukkitExecutor.executeTaskWithDelay(() -> {
+			FakeInventory.clearInventoryFor(packetHandler, player);
 
-		int slot = 9;
-		for (int i = 0; i < KEYBOARD.length; i++) {
-			packetHandler.setFakeItem(
-					player,
-					(byte) -2,
-					slot++,
-					headService.getHead(KEYBOARD[i], WordType.NORMAL)
-			);
-		}
+			int slot = 9;
+			for (int i = 0; i < KEYBOARD.length; i++) {
+				packetHandler.setFakeItem(
+						player,
+						(byte) -2,
+						slot++,
+						headService.getHead(KEYBOARD[i], WordType.NORMAL)
+				);
+			}
 
-		packetHandler.setFakeItem(player, (byte) -2, getBackspaceSlot(), getBackspaceItem());
-		packetHandler.setFakeItem(player, (byte) -2, getMarkSlot(), getMarkItem());
+			packetHandler.setFakeItem(player, (byte) -2, getBackspaceSlot(), getBackspaceItem());
+			packetHandler.setFakeItem(player, (byte) -2, getMarkSlot(), getMarkItem());
+		}, 1);
 	}
 
 	public char getClickedKey(ClientKeyboardPressKey event) {
@@ -69,16 +74,13 @@ public class KeyboardService {
 	}
 
 	public boolean isTyping(UUID id) {
-		return inventories.containsKey(id);
+		return writing.contains(id);
 	}
 
 	public void removeKeyboard(Player player) {
-		PlayerInventory inventory = player.getInventory();
+		writing.remove(player.getUniqueId());
 
-		//inventory.clear();
-		//inventory.setContents(inventories.get(player.getUniqueId()));
-
-		inventories.remove(player.getUniqueId());
+		bukkitExecutor.executeTaskWithDelay(player::updateInventory, 1);
 	}
 
 	private char getMiscKey(int rawSlot) {

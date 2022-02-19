@@ -1,7 +1,5 @@
 package com.github.diegonighty.wordle.gui.listener;
 
-import com.github.diegonighty.wordle.concurrent.bukkit.BukkitExecutor;
-import com.github.diegonighty.wordle.concurrent.bukkit.BukkitExecutorProvider;
 import com.github.diegonighty.wordle.configuration.Configuration;
 import com.github.diegonighty.wordle.game.GameService;
 import com.github.diegonighty.wordle.game.intent.WordleIntent;
@@ -26,8 +24,6 @@ import org.bukkit.inventory.ItemStack;
 import java.util.List;
 
 public class WordleGUIListenerHandler implements Listener {
-
-	private final BukkitExecutor executor = BukkitExecutorProvider.get();
 
 	private final GameService gameService;
 	private final PacketHandler packetHandler;
@@ -65,9 +61,7 @@ public class WordleGUIListenerHandler implements Listener {
 			return;
 		}
 
-		executor.executeTaskWithDelay(() -> {
-			keyboardService.setKeyboard(player);
-		}, 1);
+		keyboardService.setKeyboard(player);
 	}
 
 	@EventHandler
@@ -166,9 +160,8 @@ public class WordleGUIListenerHandler implements Listener {
 	}
 
 	public boolean handleOpenEvent(InventoryOpenEvent event) {
-		executor.executeTaskWithDelay(() -> {
-			keyboardService.setKeyboard((Player) event.getPlayer());
-		}, 1);
+		keyboardService.setKeyboard((Player) event.getPlayer());
+
 		return false;
 	}
 
@@ -179,7 +172,6 @@ public class WordleGUIListenerHandler implements Listener {
 		inputHandler.clearInput(bukkitPlayer);
 
 		gameService.saveAsync(player);
-		executor.executeTaskWithDelay(bukkitPlayer::updateInventory, 1);
 	}
 
 	public int getStartSlot(int index) {

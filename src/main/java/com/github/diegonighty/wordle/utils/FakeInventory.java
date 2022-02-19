@@ -10,10 +10,11 @@ public class FakeInventory {
 	private static final ItemStack AIR = new ItemStack(Material.AIR);
 
 	public static void clearInventoryFor(PacketHandler packetHandler, Player player) {
-		byte window = (byte) packetHandler.currentWindowID(player);
+		byte window = -2;
+		int slot = 9;
 
 		for (int i = 0; i < player.getInventory().getContents().length; i++) {
-			packetHandler.setFakeItem(player, window, i, AIR);
+			packetHandler.setFakeItem(player, window, slot++, AIR);
 		}
 	}
 
