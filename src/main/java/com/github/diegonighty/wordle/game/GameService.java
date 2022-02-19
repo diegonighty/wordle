@@ -26,12 +26,12 @@ public class GameService {
 	public void setupGame() {
 		WordleGame game = getActualGame();
 		if (game == null) {
-			gameStorage.loadGame();
-
-			WordleGame gameLoaded = getActualGame();
-			if (gameLoaded == null) {
-				createGame();
-			}
+			gameStorage.loadGame()
+					.onComplete(wordleGame -> {
+						if (wordleGame == null) {
+							createGame();
+						}
+					});
 		}
 	}
 
