@@ -25,3 +25,4 @@ public class KeyboardInterceptor1_8_8_R0_1 implements PacketInterceptor<PacketPl
 		) ? null : packet;
 	}
 }
+
