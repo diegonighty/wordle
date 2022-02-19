@@ -25,9 +25,11 @@ public abstract class AbstractGameStorage implements GameStorage {
 	}
 
 	@Override
-	public void loadGame() {
-		Promise.runAsync(() -> {
+	public Promise<WordleGame> loadGame() {
+		return Promise.supplyAsync(() -> {
 			actualGame.set(getGameInStorage());
+
+			return actualGame.get();
 		});
 	}
 

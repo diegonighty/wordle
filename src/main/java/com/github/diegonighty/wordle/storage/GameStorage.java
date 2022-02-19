@@ -1,5 +1,6 @@
 package com.github.diegonighty.wordle.storage;
 
+import com.github.diegonighty.wordle.concurrent.Promise;
 import com.github.diegonighty.wordle.game.WordleGame;
 
 public interface GameStorage {
@@ -10,5 +11,5 @@ public interface GameStorage {
 
 	void updateGame(WordleGame game);
 
-	void loadGame();
+	Promise<WordleGame> loadGame();
 }
