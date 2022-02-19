@@ -31,11 +31,26 @@ public class UserService {
 			);
 		}
 
+		updateGame(user);
 		userStorage.update(user, false);
 	}
 
 	public void handleQuit(Player player) {
 		userStorage.updateAndInvalidate(userStorage.findById(player.getUniqueId()));
+	}
+
+	private void updateGame(User user) {
+		UUID actualGame = gameService.getActualGame().getId();
+
+		WordlePlayer player = user.getPlayer();
+		WordlePlayerStatistic statistic = user.statisticOf();
+
+		if (!actualGame.equals(player.getCurrentGame())) {
+			player.setCurrentGame(actualGame);
+			player.clearIntents();
+
+			statistic.setWonToday(false);
+		}
 	}
 
 }
