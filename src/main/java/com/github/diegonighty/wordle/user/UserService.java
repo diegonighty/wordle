@@ -39,7 +39,7 @@ public class UserService {
 		userStorage.updateAndInvalidate(userStorage.findById(player.getUniqueId()));
 	}
 
-	private void updateGame(User user) {
+	public void updateGame(User user) {
 		UUID actualGame = gameService.getActualGame().getId();
 
 		WordlePlayer player = user.getPlayer();

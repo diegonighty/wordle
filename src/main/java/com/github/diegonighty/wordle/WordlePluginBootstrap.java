@@ -112,7 +112,11 @@ public class WordlePluginBootstrap {
 	}
 
 	public void registerCommands() {
-		WordleGUICommand wordleGUICommand = new WordleGUICommand(loader.getWordleGUIProvider(), loader.getGameService());
+		WordleGUICommand wordleGUICommand = new WordleGUICommand(
+				loader.getWordleGUIProvider(),
+				loader.getGameService(),
+				loader.getUserService()
+		);
 		CommandMapper.register(wordleGUICommand);
 	}
 
