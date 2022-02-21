@@ -1,5 +1,5 @@
 main: com.github.diegonighty.wordle.WordlePluginLoader
-version: 1.0.0
+version: @v
 name: Wordle
 author: DiegoNighty
 api-version: 1.13
