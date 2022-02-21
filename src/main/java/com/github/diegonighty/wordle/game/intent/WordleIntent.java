@@ -65,7 +65,7 @@ public class WordleIntent {
 
 				parts[i] = new WordleIntentPart(actualChar, WordType.BAD_POSITION);
 			} else {
-				parts[i] = new WordleIntentPart(actualChar, WordType.NORMAL);
+				parts[i] = new WordleIntentPart(actualChar, WordType.INCORRECT);
 			}
 		}
 

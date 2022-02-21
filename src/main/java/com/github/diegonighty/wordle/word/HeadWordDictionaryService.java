@@ -50,7 +50,8 @@ public class HeadWordDictionaryService implements Configurable {
 		config.reloadFile();
 
 		loadHeads(WordType.CORRECT);
-		loadHeads(WordType.NORMAL);
+		loadHeads(WordType.KEYBOARD);
+		loadHeads(WordType.INCORRECT);
 		loadHeads(WordType.BAD_POSITION);
 		loadHeads(WordType.MISC);
 	}

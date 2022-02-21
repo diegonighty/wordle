@@ -53,7 +53,7 @@ public class KeyboardService {
 						player,
 						(byte) -2,
 						slot++,
-						headService.getHead(KEYBOARD[i], WordType.NORMAL)
+						headService.getHead(KEYBOARD[i], WordType.KEYBOARD)
 				);
 			}
 

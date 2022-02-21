@@ -110,7 +110,7 @@ public class WordleGUIListenerHandler implements Listener {
 		}
 
 		int typingSlot = currentTypingSlot(user, bukkitPlayer);
-		ItemStack headToWrite = headWordDictionaryService.getHead(key, WordType.NORMAL);
+		ItemStack headToWrite = headWordDictionaryService.getHead(key, WordType.KEYBOARD);
 
 		topInventory.setItem(typingSlot, headToWrite);
 		inputHandler.write(bukkitPlayer, key);
@@ -150,14 +150,7 @@ public class WordleGUIListenerHandler implements Listener {
 	}
 
 	private int currentTypingSlot(User user, Player bukkitPlayer) {
-		int index = user.getPlayer().getCurrentIntents().size();
-		int wordNumber = inputHandler.length(bukkitPlayer);
-
-		if (wordNumber == 0) {
-			return getStartSlot(index);
-		}
-
-		return getStartSlot(index) + wordNumber;
+		return getStartSlot(user.getPlayer().getCurrentIntents().size()) + inputHandler.length(bukkitPlayer);
 	}
 
 	public boolean handleOpenEvent(InventoryOpenEvent event) {

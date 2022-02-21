@@ -2,7 +2,8 @@ package com.github.diegonighty.wordle.word;
 
 public enum WordType {
 
-	NORMAL("normal"),
+	INCORRECT("incorrect"),
+	KEYBOARD("keyboard"),
 	CORRECT("correct"),
 	BAD_POSITION("bad-position"),
 	MISC("misc");
