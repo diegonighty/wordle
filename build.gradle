@@ -53,3 +53,11 @@ dependencies {
         implementation(project(":packets:${it}"))
     })
 }
+
+processResources {
+    filesMatching("**/*.yml") {
+        filter { String line ->
+            line.replace("@v", versionString.toString())
+        }
+    }
+}
