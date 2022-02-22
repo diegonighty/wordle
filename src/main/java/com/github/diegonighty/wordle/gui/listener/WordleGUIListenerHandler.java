@@ -12,7 +12,7 @@ import com.github.diegonighty.wordle.packets.event.ClientKeyboardUpdate;
 import com.github.diegonighty.wordle.user.User;
 import com.github.diegonighty.wordle.ux.SoundService;
 import com.github.diegonighty.wordle.ux.WordleSound;
-import com.github.diegonighty.wordle.word.HeadWordDictionaryService;
+import com.github.diegonighty.wordle.word.WordDictionaryService;
 import com.github.diegonighty.wordle.word.WordType;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -33,7 +33,7 @@ public class WordleGUIListenerHandler implements Listener {
 	private final KeyboardService keyboardService;
 	private final KeyboardInputHandler inputHandler;
 
-	private final HeadWordDictionaryService headWordDictionaryService;
+	private final WordDictionaryService headWordDictionaryService;
 	private final Configuration gui;
 
 	private final SoundService soundService;
@@ -43,7 +43,7 @@ public class WordleGUIListenerHandler implements Listener {
 			PacketHandler packetHandler,
 			KeyboardService keyboardService,
 			KeyboardInputHandler inputHandler,
-			HeadWordDictionaryService headWordDictionaryService,
+			WordDictionaryService headWordDictionaryService,
 			Configuration gui,
 			SoundService soundService
 	) {

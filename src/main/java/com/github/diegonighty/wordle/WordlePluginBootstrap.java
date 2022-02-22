@@ -19,19 +19,27 @@ import com.github.diegonighty.wordle.storage.source.StorageSource;
 import com.github.diegonighty.wordle.user.UserDataHandlerListener;
 import com.github.diegonighty.wordle.user.UserService;
 import com.github.diegonighty.wordle.ux.SoundService;
-import com.github.diegonighty.wordle.word.HeadWordDictionaryService;
 import com.github.diegonighty.wordle.word.WordGeneratorHandler;
+import com.github.diegonighty.wordle.word.dictionary.DictionaryType;
+import com.github.diegonighty.wordle.word.dictionary.HeadWordDictionaryService;
+import com.github.diegonighty.wordle.word.dictionary.ModelWordDictionaryService;
 import org.bukkit.plugin.PluginManager;
 import team.unnamed.gui.core.GUIListeners;
+
+import static team.unnamed.gui.core.version.ServerVersionProvider.SERVER_VERSION_INT;
 
 public class WordlePluginBootstrap {
 
 	private final WordlePluginLoader loader;
 	private final PluginManager pluginManager;
 
+	private final Configuration config;
+
 	public WordlePluginBootstrap(WordlePluginLoader loader) {
 		this.loader = loader;
 		this.pluginManager = loader.getServer().getPluginManager();
+
+		this.config = new Configuration(loader, "config.yml");
 	}
 
 	public void setupPacketFactory() {
@@ -55,7 +63,21 @@ public class WordlePluginBootstrap {
 	}
 
 	public void setupDictionaries() {
-		loader.setHeadWordDictionaryService(new HeadWordDictionaryService(loader));
+		DictionaryType type = DictionaryType.valueOf(config.getString("word-type"));
+
+		switch (type) {
+			case SKULL:
+				loader.setHeadWordDictionaryService(new HeadWordDictionaryService(loader));
+				break;
+			case DATA:
+				if (SERVER_VERSION_INT >= 14) {
+					loader.setHeadWordDictionaryService(new ModelWordDictionaryService(loader));
+				} else {
+					loader.logger().info("Using skulls instead of models because the server version is under 1.14.4!");
+					loader.setHeadWordDictionaryService(new HeadWordDictionaryService(loader));
+				}
+				break;
+		}
 	}
 
 	public void setupKeyboard() {

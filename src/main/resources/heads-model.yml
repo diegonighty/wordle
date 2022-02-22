@@ -1,0 +1,323 @@
+keyboard:
+  a:
+    material: STRING
+    model-data: 2323
+  b:
+    material: STRING
+    model-data: 2323
+  c:
+    material: STRING
+    model-data: 2323
+  d:
+    material: STRING
+    model-data: 2323
+  e:
+    material: STRING
+    model-data: 2323
+  f:
+    material: STRING
+    model-data: 2323
+  g:
+    material: STRING
+    model-data: 2323
+  h:
+    material: STRING
+    model-data: 2323
+  i:
+    material: STRING
+    model-data: 2323
+  j:
+    material: STRING
+    model-data: 2323
+  k:
+    material: STRING
+    model-data: 2323
+  l:
+    material: STRING
+    model-data: 2323
+  m:
+    material: STRING
+    model-data: 2323
+  n:
+    material: STRING
+    model-data: 2323
+  o:
+    material: STRING
+    model-data: 2323
+  p:
+    material: STRING
+    model-data: 2323
+  q:
+    material: STRING
+    model-data: 2323
+  r:
+    material: STRING
+    model-data: 2323
+  s:
+    material: STRING
+    model-data: 2323
+  t:
+    material: STRING
+    model-data: 2323
+  u:
+    material: STRING
+    model-data: 2323
+  v:
+    material: STRING
+    model-data: 2323
+  w:
+    material: STRING
+    model-data: 2323
+  x:
+    material: STRING
+    model-data: 2323
+  y:
+    material: STRING
+    model-data: 2323
+  z:
+    material: STRING
+    model-data: 2323
+incorrect:
+  a:
+    material: STRING
+    model-data: 2323
+  b:
+    material: STRING
+    model-data: 2323
+  c:
+    material: STRING
+    model-data: 2323
+  d:
+    material: STRING
+    model-data: 2323
+  e:
+    material: STRING
+    model-data: 2323
+  f:
+    material: STRING
+    model-data: 2323
+  g:
+    material: STRING
+    model-data: 2323
+  h:
+    material: STRING
+    model-data: 2323
+  i:
+    material: STRING
+    model-data: 2323
+  j:
+    material: STRING
+    model-data: 2323
+  k:
+    material: STRING
+    model-data: 2323
+  l:
+    material: STRING
+    model-data: 2323
+  m:
+    material: STRING
+    model-data: 2323
+  n:
+    material: STRING
+    model-data: 2323
+  o:
+    material: STRING
+    model-data: 2323
+  p:
+    material: STRING
+    model-data: 2323
+  q:
+    material: STRING
+    model-data: 2323
+  r:
+    material: STRING
+    model-data: 2323
+  s:
+    material: STRING
+    model-data: 2323
+  t:
+    material: STRING
+    model-data: 2323
+  u:
+    material: STRING
+    model-data: 2323
+  v:
+    material: STRING
+    model-data: 2323
+  w:
+    material: STRING
+    model-data: 2323
+  x:
+    material: STRING
+    model-data: 2323
+  y:
+    material: STRING
+    model-data: 2323
+  z:
+    material: STRING
+    model-data: 2323
+correct:
+  a:
+    material: STRING
+    model-data: 2323
+  b:
+    material: STRING
+    model-data: 2323
+  c:
+    material: STRING
+    model-data: 2323
+  d:
+    material: STRING
+    model-data: 2323
+  e:
+    material: STRING
+    model-data: 2323
+  f:
+    material: STRING
+    model-data: 2323
+  g:
+    material: STRING
+    model-data: 2323
+  h:
+    material: STRING
+    model-data: 2323
+  i:
+    material: STRING
+    model-data: 2323
+  j:
+    material: STRING
+    model-data: 2323
+  k:
+    material: STRING
+    model-data: 2323
+  l:
+    material: STRING
+    model-data: 2323
+  m:
+    material: STRING
+    model-data: 2323
+  n:
+    material: STRING
+    model-data: 2323
+  o:
+    material: STRING
+    model-data: 2323
+  p:
+    material: STRING
+    model-data: 2323
+  q:
+    material: STRING
+    model-data: 2323
+  r:
+    material: STRING
+    model-data: 2323
+  s:
+    material: STRING
+    model-data: 2323
+  t:
+    material: STRING
+    model-data: 2323
+  u:
+    material: STRING
+    model-data: 2323
+  v:
+    material: STRING
+    model-data: 2323
+  w:
+    material: STRING
+    model-data: 2323
+  x:
+    material: STRING
+    model-data: 2323
+  y:
+    material: STRING
+    model-data: 2323
+  z:
+    material: STRING
+    model-data: 2323
+bad-position:
+  a:
+    material: STRING
+    model-data: 2323
+  b:
+    material: STRING
+    model-data: 2323
+  c:
+    material: STRING
+    model-data: 2323
+  d:
+    material: STRING
+    model-data: 2323
+  e:
+    material: STRING
+    model-data: 2323
+  f:
+    material: STRING
+    model-data: 2323
+  g:
+    material: STRING
+    model-data: 2323
+  h:
+    material: STRING
+    model-data: 2323
+  i:
+    material: STRING
+    model-data: 2323
+  j:
+    material: STRING
+    model-data: 2323
+  k:
+    material: STRING
+    model-data: 2323
+  l:
+    material: STRING
+    model-data: 2323
+  m:
+    material: STRING
+    model-data: 2323
+  n:
+    material: STRING
+    model-data: 2323
+  o:
+    material: STRING
+    model-data: 2323
+  p:
+    material: STRING
+    model-data: 2323
+  q:
+    material: STRING
+    model-data: 2323
+  r:
+    material: STRING
+    model-data: 2323
+  s:
+    material: STRING
+    model-data: 2323
+  t:
+    material: STRING
+    model-data: 2323
+  u:
+    material: STRING
+    model-data: 2323
+  v:
+    material: STRING
+    model-data: 2323
+  w:
+    material: STRING
+    model-data: 2323
+  x:
+    material: STRING
+    model-data: 2323
+  y:
+    material: STRING
+    model-data: 2323
+  z:
+    material: STRING
+    model-data: 2323
+misc:
+  1:
+    material: STRING
+    model-data: 1002
+  2:
+    material: STRING
+    model-data: 1003

@@ -6,7 +6,8 @@ import com.github.diegonighty.wordle.configuration.Configuration;
 import com.github.diegonighty.wordle.packets.PacketHandler;
 import com.github.diegonighty.wordle.packets.event.ClientKeyboardPressKey;
 import com.github.diegonighty.wordle.utils.FakeInventory;
-import com.github.diegonighty.wordle.word.HeadWordDictionaryService;
+import com.github.diegonighty.wordle.utils.ItemNamer;
+import com.github.diegonighty.wordle.word.WordDictionaryService;
 import com.github.diegonighty.wordle.word.WordType;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -29,13 +30,13 @@ public class KeyboardService {
 
 	private final Set<UUID> writing = new HashSet<>();
 
-	private final HeadWordDictionaryService headService;
+	private final WordDictionaryService headService;
 	private final Configuration keyboardConfig;
 
 	private final BukkitExecutor bukkitExecutor = BukkitExecutorProvider.get();
 	private final PacketHandler packetHandler;
 
-	public KeyboardService(Plugin plugin, HeadWordDictionaryService wordDictionaryService, PacketHandler packetHandler) {
+	public KeyboardService(Plugin plugin, WordDictionaryService wordDictionaryService, PacketHandler packetHandler) {
 		this.keyboardConfig = new Configuration(plugin, "keyboard.yml");
 		this.headService = wordDictionaryService;
 		this.packetHandler = packetHandler;
@@ -94,9 +95,10 @@ public class KeyboardService {
 	}
 
 	private ItemStack getBackspaceItem() {
-		return headService.getBackspaceHead()
-				.setName(keyboardConfig.getString("keys.backspace.name"))
-				.build();
+		return ItemNamer.setName(
+				headService.getBackspaceHead(),
+				keyboardConfig.getString("keys.backspace.name")
+		);
 	}
 
 	private int getBackspaceSlot() {
@@ -104,9 +106,10 @@ public class KeyboardService {
 	}
 
 	private ItemStack getMarkItem() {
-		return headService.getMarkHead()
-				.setName(keyboardConfig.getString("keys.mark.name"))
-				.build();
+		return ItemNamer.setName(
+				headService.getMarkHead(),
+				keyboardConfig.getString("keys.mark.name")
+		);
 	}
 
 	private int getMarkSlot() {

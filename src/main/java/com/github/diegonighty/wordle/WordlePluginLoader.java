@@ -10,7 +10,7 @@ import com.github.diegonighty.wordle.storage.GameStorage;
 import com.github.diegonighty.wordle.storage.UserStorage;
 import com.github.diegonighty.wordle.user.UserService;
 import com.github.diegonighty.wordle.ux.SoundService;
-import com.github.diegonighty.wordle.word.HeadWordDictionaryService;
+import com.github.diegonighty.wordle.word.WordDictionaryService;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.time.Duration;
@@ -28,7 +28,7 @@ public class WordlePluginLoader extends JavaPlugin {
 	private UserStorage userStorage;
 
 	private SoundService soundService;
-	private HeadWordDictionaryService headWordDictionaryService;
+	private WordDictionaryService headWordDictionaryService;
 
 	private KeyboardService keyboardService;
 	private KeyboardInputHandler keyboardInputHandler;
@@ -90,7 +90,7 @@ public class WordlePluginLoader extends JavaPlugin {
 		this.userStorage = userStorage;
 	}
 
-	public void setHeadWordDictionaryService(HeadWordDictionaryService headWordDictionaryService) {
+	public void setHeadWordDictionaryService(WordDictionaryService headWordDictionaryService) {
 		this.headWordDictionaryService = headWordDictionaryService;
 	}
 
@@ -98,7 +98,7 @@ public class WordlePluginLoader extends JavaPlugin {
 		return gameStorage;
 	}
 
-	public HeadWordDictionaryService getHeadWordDictionaryService() {
+	public WordDictionaryService getHeadWordDictionaryService() {
 		return headWordDictionaryService;
 	}
 

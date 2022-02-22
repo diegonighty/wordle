@@ -1,7 +1,8 @@
-package com.github.diegonighty.wordle.word;
+package com.github.diegonighty.wordle.word.dictionary;
 
-import com.github.diegonighty.wordle.configuration.Configurable;
 import com.github.diegonighty.wordle.configuration.Configuration;
+import com.github.diegonighty.wordle.word.WordDictionaryService;
+import com.github.diegonighty.wordle.word.WordType;
 import com.google.common.collect.HashBasedTable;
 import com.google.common.collect.Table;
 import org.bukkit.configuration.ConfigurationSection;
@@ -9,7 +10,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.Plugin;
 import team.unnamed.gui.core.item.type.ItemBuilder;
 
-public class HeadWordDictionaryService implements Configurable {
+public class HeadWordDictionaryService implements WordDictionaryService {
 
 	private final Table<Character, WordType, String> dictionary = HashBasedTable.create();
 	private final Configuration config;
@@ -20,6 +21,7 @@ public class HeadWordDictionaryService implements Configurable {
 		reload();
 	}
 
+	@Override
 	public ItemStack getHead(Character letter, WordType type) {
 		return ItemBuilder.newSkullBuilder(1)
 				.setUrl(getURL(letter, type))
@@ -27,14 +29,18 @@ public class HeadWordDictionaryService implements Configurable {
 				.build();
 	}
 
-	public ItemBuilder getMarkHead() {
+	@Override
+	public ItemStack getMarkHead() {
 		return ItemBuilder.newSkullBuilder(1)
-				.setUrl(getURL('1', WordType.MISC));
+				.setUrl(getURL('1', WordType.MISC))
+				.build();
 	}
 
-	public ItemBuilder getBackspaceHead() {
+	@Override
+	public ItemStack getBackspaceHead() {
 		return ItemBuilder.newSkullBuilder(1)
-				.setUrl(getURL('2', WordType.MISC));
+				.setUrl(getURL('2', WordType.MISC))
+				.build();
 	}
 
 	private void loadHeads(WordType type) {
