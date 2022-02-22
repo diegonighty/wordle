@@ -9,6 +9,7 @@ import com.github.diegonighty.wordle.packets.PacketHandler;
 import com.github.diegonighty.wordle.storage.GameStorage;
 import com.github.diegonighty.wordle.storage.UserStorage;
 import com.github.diegonighty.wordle.user.UserService;
+import com.github.diegonighty.wordle.ux.SoundService;
 import com.github.diegonighty.wordle.word.HeadWordDictionaryService;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -26,6 +27,7 @@ public class WordlePluginLoader extends JavaPlugin {
 	private GameStorage gameStorage;
 	private UserStorage userStorage;
 
+	private SoundService soundService;
 	private HeadWordDictionaryService headWordDictionaryService;
 
 	private KeyboardService keyboardService;
@@ -62,6 +64,7 @@ public class WordlePluginLoader extends JavaPlugin {
 		counter.start();
 
 		bootstrap.setupPacketFactory();
+		bootstrap.setupUX();
 		bootstrap.setupDictionaries();
 		bootstrap.setupKeyboard();
 		bootstrap.setupGame();
@@ -157,6 +160,14 @@ public class WordlePluginLoader extends JavaPlugin {
 
 	public void setPacketHandler(PacketHandler packetHandler) {
 		this.packetHandler = packetHandler;
+	}
+
+	public SoundService getSoundService() {
+		return soundService;
+	}
+
+	public void setSoundService(SoundService soundService) {
+		this.soundService = soundService;
 	}
 
 	private static class TaskTimeCount {

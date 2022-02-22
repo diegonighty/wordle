@@ -10,6 +10,8 @@ import com.github.diegonighty.wordle.packets.PacketHandler;
 import com.github.diegonighty.wordle.packets.event.ClientKeyboardPressKey;
 import com.github.diegonighty.wordle.packets.event.ClientKeyboardUpdate;
 import com.github.diegonighty.wordle.user.User;
+import com.github.diegonighty.wordle.ux.SoundService;
+import com.github.diegonighty.wordle.ux.WordleSound;
 import com.github.diegonighty.wordle.word.HeadWordDictionaryService;
 import com.github.diegonighty.wordle.word.WordType;
 import org.bukkit.Material;
@@ -34,13 +36,16 @@ public class WordleGUIListenerHandler implements Listener {
 	private final HeadWordDictionaryService headWordDictionaryService;
 	private final Configuration gui;
 
+	private final SoundService soundService;
+
 	public WordleGUIListenerHandler(
 			GameService gameService,
 			PacketHandler packetHandler,
 			KeyboardService keyboardService,
 			KeyboardInputHandler inputHandler,
 			HeadWordDictionaryService headWordDictionaryService,
-			Configuration gui
+			Configuration gui,
+			SoundService soundService
 	) {
 		this.gameService = gameService;
 		this.packetHandler = packetHandler;
@@ -48,6 +53,7 @@ public class WordleGUIListenerHandler implements Listener {
 		this.inputHandler = inputHandler;
 		this.headWordDictionaryService = headWordDictionaryService;
 		this.gui = gui;
+		this.soundService = soundService;
 	}
 
 	@EventHandler
@@ -91,6 +97,7 @@ public class WordleGUIListenerHandler implements Listener {
 		}
 
 		Inventory topInventory = event.getView().getTopInventory();
+		soundService.play(player, WordleSound.PRESS_KEY);
 
 		if (key == keyboardService.getMarkKey()) {
 			handleMarkKey(topInventory, user, player);
@@ -135,6 +142,10 @@ public class WordleGUIListenerHandler implements Listener {
 
 		if (gameService.testPhrase(user, gameService.getActualGame(), inputHandler.out(bukkitPlayer))) {
 			// YOU WON!
+			soundService.play(bukkitPlayer, WordleSound.WIN);
+		} else {
+			// YOU LOSE :v
+			soundService.play(bukkitPlayer, WordleSound.LOSE);
 		}
 
 		List<WordleIntent> intents = user.getPlayer().getCurrentIntents();

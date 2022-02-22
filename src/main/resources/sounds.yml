@@ -1,0 +1,15 @@
+WIN:
+  enable: true
+  sound: ENTITY_PLAYER_LEVELUP
+  volume: 2
+  pitch: 2
+PRESS-KEY:
+  enable: true
+  sound: UI_BUTTON_CLICK
+  volume: 2
+  pitch: 2
+LOSE:
+  enable: true
+  sound: ENTITY_PLAYER_DEATH
+  volume: 2
+  pitch: 2

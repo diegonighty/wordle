@@ -26,14 +26,12 @@ public class WordleGUIProvider {
 	}
 
 	public Inventory buildFor(User user) {
-		GUIBuilder builder = GUIBuilder.builder(gui.getString("title"), 5);
+		GUIBuilder builder = GUIBuilder.builder(gui.getString("title"), 5)
+				.openAction(listenerHandler::handleOpenEvent)
+				.closeAction(event -> listenerHandler.handleQuitEvent(event, user));
 
 		fillBorders(builder);
 		placeIntents(builder, user.getPlayer().getCurrentIntents());
-
-		builder
-				.openAction(listenerHandler::handleOpenEvent)
-				.closeAction(event -> listenerHandler.handleQuitEvent(event, user));
 
 		return builder.build();
 	}
