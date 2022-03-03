@@ -10,7 +10,6 @@ subprojects { it ->
 
     repositories {
         maven { url ("https://repo.codemc.io/repository/nms/") }
-        maven { url ("https://libraries.minecraft.net/") }
     }
 
     dependencies {

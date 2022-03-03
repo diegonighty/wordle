@@ -10,8 +10,7 @@ allprojects {
     repositories {
         mavenCentral()
 
-        maven { url("https://repo.unnamed.team/repository/unnamed-releases/") }
-        maven { url("https://repo.unnamed.team/repository/unnamed-snapshots/") }
+        maven { url ("https://libraries.minecraft.net/") }
 
         maven { url("https://oss.sonatype.org/content/repositories/snapshots/") }
         maven { url("https://hub.spigotmc.org/nexus/content/repositories/snapshots/") }
@@ -33,6 +32,7 @@ dependencies {
 
     //spigot
     compileOnly("org.spigotmc:spigot-api:1.8.8-R0.1-SNAPSHOT")
+    compileOnly("com.mojang:authlib:1.5.21")
 
     //database connectivity (mysql)
     implementation("com.zaxxer:HikariCP:4.0.3")
