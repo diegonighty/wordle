@@ -23,7 +23,6 @@ shadowJar {
     archiveClassifier.set("java${javaBuildVersion}")
 
     relocate("org.jetbrains", "${libraryPackage}.annotations");
-    relocate("team.unnamed.gui", "${libraryPackage}.gui")
     relocate("com.zaxxer", "${libraryPackage}.hikaricp")
     relocate("org.jdbi", "${libraryPackage}.jdbi")
 }
@@ -34,9 +33,6 @@ dependencies {
 
     //spigot
     compileOnly("org.spigotmc:spigot-api:1.8.8-R0.1-SNAPSHOT")
-
-    //gui
-    implementation("team.unnamed.gui:core:2.3.3-SNAPSHOT")
 
     //database connectivity (mysql)
     implementation("com.zaxxer:HikariCP:4.0.3")
