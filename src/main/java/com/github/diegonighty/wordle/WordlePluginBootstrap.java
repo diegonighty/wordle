@@ -24,9 +24,8 @@ import com.github.diegonighty.wordle.word.dictionary.DictionaryType;
 import com.github.diegonighty.wordle.word.dictionary.HeadWordDictionaryService;
 import com.github.diegonighty.wordle.word.dictionary.ModelWordDictionaryService;
 import org.bukkit.plugin.PluginManager;
-import team.unnamed.gui.core.GUIListeners;
 
-import static team.unnamed.gui.core.version.ServerVersionProvider.SERVER_VERSION_INT;
+import static com.github.diegonighty.wordle.packets.PacketHandlerFactory.SERVER_VERSION_INT;
 
 public class WordlePluginBootstrap {
 
@@ -128,7 +127,6 @@ public class WordlePluginBootstrap {
 		loader.setWordleGUIProvider(new WordleGUIProvider(gui, listenerHandler));
 
 		pluginManager.registerEvents(listenerHandler, loader);
-		pluginManager.registerEvents(new GUIListeners(), loader);
 	}
 
 	public void setupUserServices() {

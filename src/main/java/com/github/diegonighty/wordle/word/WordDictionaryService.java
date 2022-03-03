@@ -1,14 +1,14 @@
 package com.github.diegonighty.wordle.word;
 
 import com.github.diegonighty.wordle.configuration.Configurable;
-import org.bukkit.inventory.ItemStack;
+import com.github.diegonighty.wordle.utils.FluentItem;
 
 public interface WordDictionaryService extends Configurable {
 
-	ItemStack getHead(Character letter, WordType type);
+	FluentItem getHead(Character letter, WordType type);
 
-	ItemStack getMarkHead();
+	FluentItem getMarkHead();
 
-	ItemStack getBackspaceHead();
+	FluentItem getBackspaceHead();
 
 }

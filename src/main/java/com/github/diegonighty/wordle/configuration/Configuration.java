@@ -1,5 +1,6 @@
 package com.github.diegonighty.wordle.configuration;
 
+import com.github.diegonighty.wordle.utils.SafeMaterial;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.configuration.ConfigurationSection;
@@ -75,7 +76,7 @@ public final class Configuration extends YamlConfiguration {
 	public ItemStack getItem(String sectionPath) {
 		ConfigurationSection section = getConfigurationSection(sectionPath);
 
-		Material material = Material.matchMaterial(section.getString("material"));
+		Material material = SafeMaterial.from(section.getString("material"));
 		int data = section.getInt("data", 0);
 
 		return data != 0 ? new ItemStack(material, 1, (short) data) : new ItemStack(material);

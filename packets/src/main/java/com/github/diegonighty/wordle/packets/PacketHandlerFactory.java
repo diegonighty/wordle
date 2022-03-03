@@ -4,13 +4,19 @@ import org.bukkit.Bukkit;
 
 public class PacketHandlerFactory {
 
-	private static final String SERVER_VERSION = Bukkit.getServer().getBukkitVersion()
+	public static final String SERVER_VERSION = Bukkit.getServer().getBukkitVersion()
 			.replace("-SNAPSHOT", "")
 			.replace("-", "_")
 			.replace('.', '_');
 
 	private static final String CLASS_NAME = PacketHandlerFactory.class.getPackage().getName()
 			+ ".PacketHandler" + SERVER_VERSION;
+
+	public static final int SERVER_VERSION_INT = Integer.parseInt(
+			SERVER_VERSION
+					.replace("1_", "")
+					.replaceAll("_R\\d", "")
+	);
 
 	public static PacketHandler createNewPacketHandler() {
 		try {

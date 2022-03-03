@@ -19,7 +19,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryCloseEvent;
-import org.bukkit.event.inventory.InventoryOpenEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
@@ -84,7 +83,7 @@ public class WordleGUIListenerHandler implements Listener {
 		char key = keyboardService.getClickedKey(event);
 
 		if (key == keyboardService.getUnknownKey()) {
-			event.setCancelPacket(false);
+			event.setCancelPacket(true);
 			return;
 		}
 
@@ -117,7 +116,8 @@ public class WordleGUIListenerHandler implements Listener {
 		}
 
 		int typingSlot = currentTypingSlot(user, bukkitPlayer);
-		ItemStack headToWrite = headWordDictionaryService.getHead(key, WordType.KEYBOARD);
+		ItemStack headToWrite = headWordDictionaryService.getHead(key, WordType.KEYBOARD)
+				.toBukkit();
 
 		topInventory.setItem(typingSlot, headToWrite);
 		inputHandler.write(bukkitPlayer, key);
@@ -164,19 +164,22 @@ public class WordleGUIListenerHandler implements Listener {
 		return getStartSlot(user.getPlayer().getCurrentIntents().size()) + inputHandler.length(bukkitPlayer);
 	}
 
-	public boolean handleOpenEvent(InventoryOpenEvent event) {
-		keyboardService.setKeyboard((Player) event.getPlayer());
-
-		return false;
+	public void handleOpen(Player bukkitPlayer) {
+		keyboardService.setKeyboard(bukkitPlayer);
 	}
 
-	public void handleQuitEvent(InventoryCloseEvent event, User player) {
+	@EventHandler
+	public void handleQuitEvent(InventoryCloseEvent event) {
 		Player bukkitPlayer = (Player) event.getPlayer();
+
+		if (!keyboardService.isTyping(bukkitPlayer.getUniqueId())) {
+			return;
+		}
 
 		keyboardService.removeKeyboard(bukkitPlayer);
 		inputHandler.clearInput(bukkitPlayer);
 
-		gameService.saveAsync(player);
+		gameService.saveAsync(gameService.findUserById(bukkitPlayer.getUniqueId()));
 	}
 
 	public int getStartSlot(int index) {
@@ -184,7 +187,8 @@ public class WordleGUIListenerHandler implements Listener {
 	}
 
 	public ItemStack buildWordPart(WordleIntentPart part) {
-		return headWordDictionaryService.getHead(part.getLetter(), part.getType());
+		return headWordDictionaryService.getHead(part.getLetter(), part.getType())
+				.toBukkit();
 	}
 
 }

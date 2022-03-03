@@ -6,7 +6,6 @@ import com.github.diegonighty.wordle.configuration.Configuration;
 import com.github.diegonighty.wordle.packets.PacketHandler;
 import com.github.diegonighty.wordle.packets.event.ClientKeyboardPressKey;
 import com.github.diegonighty.wordle.utils.FakeInventory;
-import com.github.diegonighty.wordle.utils.ItemNamer;
 import com.github.diegonighty.wordle.word.WordDictionaryService;
 import com.github.diegonighty.wordle.word.WordType;
 import org.bukkit.entity.Player;
@@ -54,7 +53,7 @@ public class KeyboardService {
 						player,
 						(byte) -2,
 						slot++,
-						headService.getHead(KEYBOARD[i], WordType.KEYBOARD)
+						headService.getHead(KEYBOARD[i], WordType.KEYBOARD).toBukkit()
 				);
 			}
 
@@ -64,7 +63,6 @@ public class KeyboardService {
 	}
 
 	public char getClickedKey(ClientKeyboardPressKey event) {
-		//TODO maybe change this?
 		int index = event.getRawSlot() - START_KEYBOARD_SLOT;
 
 		if (index < 0 || index >= KEYBOARD.length) {
@@ -95,10 +93,9 @@ public class KeyboardService {
 	}
 
 	private ItemStack getBackspaceItem() {
-		return ItemNamer.setName(
-				headService.getBackspaceHead(),
-				keyboardConfig.getString("keys.backspace.name")
-		);
+		return headService.getBackspaceHead()
+				.setName(keyboardConfig.getString("keys.backspace.name"))
+				.toBukkit();
 	}
 
 	private int getBackspaceSlot() {
@@ -106,10 +103,9 @@ public class KeyboardService {
 	}
 
 	private ItemStack getMarkItem() {
-		return ItemNamer.setName(
-				headService.getMarkHead(),
-				keyboardConfig.getString("keys.mark.name")
-		);
+		return headService.getMarkHead()
+				.setName(keyboardConfig.getString("keys.mark.name"))
+				.toBukkit();
 	}
 
 	private int getMarkSlot() {

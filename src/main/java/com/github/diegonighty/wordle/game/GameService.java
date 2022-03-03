@@ -2,6 +2,8 @@ package com.github.diegonighty.wordle.game;
 
 import com.github.diegonighty.wordle.concurrent.Promise;
 import com.github.diegonighty.wordle.game.intent.WordleIntent;
+import com.github.diegonighty.wordle.leaderboard.LeaderboardEntry;
+import com.github.diegonighty.wordle.leaderboard.LeaderboardProvider;
 import com.github.diegonighty.wordle.statistic.WordlePlayerStatistic;
 import com.github.diegonighty.wordle.storage.GameStorage;
 import com.github.diegonighty.wordle.storage.UserStorage;
@@ -56,9 +58,12 @@ public class GameService {
 				stats.setRecordOfTries(player.getCurrentIntents().size());
 			}
 
+			LeaderboardProvider.WINS.update(LeaderboardEntry.of(user.bukkit(), stats.wins()));
 		} else {
 			stats.addFail();
 			stats.addBadPosition(intent.badPositions());
+
+			LeaderboardProvider.FAILS.update(LeaderboardEntry.of(user.bukkit(), stats.fails()));
 		}
 
 		saveCache(user);

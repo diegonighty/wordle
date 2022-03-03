@@ -33,7 +33,7 @@ public class WordleGUICommand extends Command {
 		User user = gameService.findUserById(player.getUniqueId());
 
 		userService.updateGame(user);
-		player.openInventory(guiProvider.buildFor(user));
+		guiProvider.open(player, user);
 		return true;
 	}
 

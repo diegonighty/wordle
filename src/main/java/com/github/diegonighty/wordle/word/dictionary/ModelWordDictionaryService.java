@@ -1,14 +1,12 @@
 package com.github.diegonighty.wordle.word.dictionary;
 
 import com.github.diegonighty.wordle.configuration.Configuration;
-import com.github.diegonighty.wordle.packets.model.ModelDataApplier;
+import com.github.diegonighty.wordle.utils.FluentItem;
+import com.github.diegonighty.wordle.utils.SafeMaterial;
 import com.github.diegonighty.wordle.word.WordDictionaryService;
 import com.github.diegonighty.wordle.word.WordType;
-import org.bukkit.Material;
 import org.bukkit.configuration.ConfigurationSection;
-import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.Plugin;
-import team.unnamed.gui.core.item.type.ItemBuilder;
 
 public class ModelWordDictionaryService implements WordDictionaryService {
 
@@ -21,17 +19,17 @@ public class ModelWordDictionaryService implements WordDictionaryService {
 	}
 
 	@Override
-	public ItemStack getHead(Character letter, WordType type) {
+	public FluentItem getHead(Character letter, WordType type) {
 		return getItem(letter, type);
 	}
 
 	@Override
-	public ItemStack getMarkHead() {
+	public FluentItem getMarkHead() {
 		return getHead('1', WordType.MISC);
 	}
 
 	@Override
-	public ItemStack getBackspaceHead() {
+	public FluentItem getBackspaceHead() {
 		return getHead('2', WordType.MISC);
 	}
 
@@ -40,16 +38,12 @@ public class ModelWordDictionaryService implements WordDictionaryService {
 		config.reloadFile();
 	}
 
-	private ItemStack getItem(Character letter, WordType type) {
+	private FluentItem getItem(Character letter, WordType type) {
 		ConfigurationSection section = config.getConfigurationSection(type.path() + "." + letter);
 
-		return ModelDataApplier.apply(
-				ItemBuilder.newBuilder(Material.valueOf(section.getString("material")))
+		return FluentItem.create(SafeMaterial.from(section.getString("material")))
 						.setName(letter.toString())
-						.build()
-				,
-				section.getInt("model-data")
-		);
+						.setModelData(section.getInt("model-data"));
 	}
 
 }

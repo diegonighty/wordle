@@ -2,6 +2,8 @@ package com.github.diegonighty.wordle.user;
 
 import com.github.diegonighty.wordle.game.WordlePlayer;
 import com.github.diegonighty.wordle.statistic.WordlePlayerStatistic;
+import org.bukkit.Bukkit;
+import org.bukkit.entity.Player;
 
 import java.util.UUID;
 
@@ -30,6 +32,10 @@ public class User {
 
 	public WordlePlayer getPlayer() {
 		return player;
+	}
+
+	public Player bukkit() {
+		return Bukkit.getPlayer(id);
 	}
 
 	public WordlePlayerStatistic statisticOf() {
