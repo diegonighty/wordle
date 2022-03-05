@@ -24,15 +24,12 @@ public class Skulls {
 			MATERIAL = Material.valueOf("PLAYER_HEAD");
 		}
 
-		try {
-			Class<?> metaClass = Class.forName(
-					"org.bukkit.craftbukkit.v"
-							+ SERVER_VERSION_INT +
-							".inventory.CraftMetaSkull"
-			);
+		ItemStack itemStack = new ItemStack(MATERIAL);
+		SkullMeta skullMeta = (SkullMeta) itemStack.getItemMeta();
 
-			PROFILE_FIELD = metaClass.getDeclaredField("profile");
-		} catch (ClassNotFoundException | NoSuchFieldException e) {
+		try {
+			PROFILE_FIELD = skullMeta.getClass().getDeclaredField("profile");
+		} catch (NoSuchFieldException e) {
 			throw new IllegalStateException("Cannot get the SkullMeta profile field!", e);
 		}
 	}

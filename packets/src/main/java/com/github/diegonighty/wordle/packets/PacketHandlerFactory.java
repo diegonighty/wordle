@@ -13,9 +13,7 @@ public class PacketHandlerFactory {
 			+ ".PacketHandler" + SERVER_VERSION;
 
 	public static final int SERVER_VERSION_INT = Integer.parseInt(
-			SERVER_VERSION
-					.replace("1_", "")
-					.replaceAll("_R\\d", "")
+			Bukkit.getBukkitVersion().split("-")[0].split("\\.")[1]
 	);
 
 	public static PacketHandler createNewPacketHandler() {
