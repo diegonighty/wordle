@@ -13,7 +13,7 @@ public class SafeMaterial {
 		Material material = Material.matchMaterial(name);
 
 		if (material == null) {
-			LOGGER.warning("Getting invalid material, please configure it correctly");
+			LOGGER.warning("Getting invalid material ( " + name + " ), please configure it correctly");
 			return Material.STONE;
 		}
 
