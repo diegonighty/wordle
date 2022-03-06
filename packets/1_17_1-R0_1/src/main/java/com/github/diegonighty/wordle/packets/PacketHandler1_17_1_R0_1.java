@@ -19,7 +19,7 @@ public class PacketHandler1_17_1_R0_1 implements PacketHandler {
 		CraftPlayer craftPlayer = (CraftPlayer) player;
 		EntityPlayer entityHuman = craftPlayer.getHandle();
 
-		PacketPlayOutSetSlot packet = new PacketPlayOutSetSlot(windowID, slot, entityHuman.bV.incrementStateId(), CraftItemStack.asNMSCopy(item));
+		PacketPlayOutSetSlot packet = new PacketPlayOutSetSlot(windowID, entityHuman.bV.getStateId(), slot, CraftItemStack.asNMSCopy(item));
 
 		entityHuman.b.sendPacket(packet);
 	}

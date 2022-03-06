@@ -21,7 +21,7 @@ public class KeyboardInterceptor1_17_1_R0_1 implements PacketInterceptor<PacketP
 				bukkitExecutor,
 				player,
 				player.getOpenInventory(),
-				packet.d()
+				packet.c()
 		) ? null : packet;
 	}
 }
