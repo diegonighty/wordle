@@ -27,7 +27,7 @@ public class WordleGUIProvider {
 	}
 
 	public void open(Player bukkitPlayer, User user) {
-		Inventory inventory = Bukkit.createInventory(null, 45, gui.getString("title"));
+		Inventory inventory = Bukkit.createInventory(null, 54, gui.getString("title"));
 		listenerHandler.handleOpen(bukkitPlayer);
 
 		fillBorders(inventory);

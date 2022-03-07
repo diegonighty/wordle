@@ -91,7 +91,7 @@ public class WordleGUIListenerHandler implements Listener {
 		player.updateInventory();
 
 		User user = gameService.findUserById(player.getUniqueId());
-		if (user.statisticOf().isWonToday() || user.getPlayer().getCurrentIntents().size() >= 5) {
+		if (user.statisticOf().isWonToday() || user.getPlayer().isMaxIntents()) {
 			event.setCancelPacket(true);
 			return;
 		}

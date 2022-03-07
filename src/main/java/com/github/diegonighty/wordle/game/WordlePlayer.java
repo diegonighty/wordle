@@ -7,6 +7,8 @@ import java.util.UUID;
 
 public class WordlePlayer {
 
+	private static final int MAX_PLAYER_INTENTS = 6;
+
 	private final UUID id;
 	private UUID currentGame;
 
@@ -27,7 +29,7 @@ public class WordlePlayer {
 	}
 
 	public boolean isMaxIntents() {
-		return currentIntents.size() >= 5;
+		return currentIntents.size() >= MAX_PLAYER_INTENTS;
 	}
 
 	public void addIntent(WordleIntent intent) {
