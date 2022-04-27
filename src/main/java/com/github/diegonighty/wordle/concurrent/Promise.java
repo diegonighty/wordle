@@ -26,6 +26,7 @@ public final class Promise<T> {
 
 	private Promise(CompletableFuture<T> future) {
 		this.backingFuture = future;
+		updateBacking();
 	}
 
 	/**
@@ -110,7 +111,7 @@ public final class Promise<T> {
 	public Promise<T> onComplete(Consumer<T> completeConsumer) {
 		this.completeAction = completeConsumer;
 
-		return updateBacking();
+		return this;
 	}
 
 	/**
@@ -121,10 +122,10 @@ public final class Promise<T> {
 	public Promise<T> onFailure(Consumer<Throwable> throwableConsumer) {
 		this.catchAction = throwableConsumer;
 
-		return updateBacking();
+		return this;
 	}
 
-	private Promise<T> updateBacking() {
+	private void updateBacking() {
 		backingFuture.whenComplete((t, throwable) -> {
 			if (throwable != null) {
 				catchAction.accept(throwable);
@@ -132,8 +133,6 @@ public final class Promise<T> {
 				completeAction.accept(t);
 			}
 		});
-
-		return this;
 	}
 
 	public CompletableFuture<T> toCompletable() {
