@@ -3,7 +3,7 @@ rootProject.name = 'wordle'
 include("packets")
 
 def versions = [
-		"1_8_8-R0_3",
+		"1_8_8-R0_1",
 		"1_12_2-R0_1",
 		"1_16_5-R0_1",
 		"1_17_1-R0_1",
