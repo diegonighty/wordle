@@ -47,6 +47,7 @@ dependencies {
         implementation(project(":packets:1_17_1-R0_1"))
     } else if (java == 17) {
         implementation(project(":packets:1_18_1-R0_1"))
+        implementation(project(":packets:1_18_2-R0_1"))
     } else {
         [ "1_8_8-R0_1",
           "1_12_2-R0_1",

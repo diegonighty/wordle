@@ -28,7 +28,7 @@ public class PacketHandlerFactory {
 
 			return (PacketHandler) packetHandler;
 		} catch (ClassNotFoundException e) {
-			throw new IllegalStateException("PacketHandler not found: '" + CLASS_NAME + '.');
+			throw new IllegalStateException("Your Server version is not supported with Wordle!, trying to find: " + CLASS_NAME);
 		} catch (ReflectiveOperationException e) {
 			throw new IllegalStateException("Failed to instantiate PacketHandler", e);
 		}
