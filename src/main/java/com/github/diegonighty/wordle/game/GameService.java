@@ -1,5 +1,6 @@
 package com.github.diegonighty.wordle.game;
 
+import com.github.diegonighty.wordle.LoggerProvider;
 import com.github.diegonighty.wordle.concurrent.Promise;
 import com.github.diegonighty.wordle.game.intent.WordleIntent;
 import com.github.diegonighty.wordle.leaderboard.LeaderboardEntry;
@@ -37,9 +38,12 @@ public class GameService {
 		}
 	}
 
-	public void createGame() {
+	public WordleGame createGame() {
 		WordleGame wordleGame = new WordleGame(UUID.randomUUID(), wordGeneratorHandler.chooseRandomWord());
 		gameStorage.updateGame(wordleGame);
+
+		LoggerProvider.get().info("Creating a wordle new game with the uuid of " + wordleGame.getId().toString());
+		return wordleGame;
 	}
 
 	public boolean testPhrase(User user, WordleGame game, String phrase) {
@@ -71,7 +75,9 @@ public class GameService {
 	}
 
 	public WordleGame getActualGame() {
-		return gameStorage.getGame();
+		WordleGame game = gameStorage.getGame();
+
+		return game == null ? createGame() : game;
 	}
 
 	public User findUserById(UUID id) {
